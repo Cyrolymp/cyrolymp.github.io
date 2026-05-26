@@ -6,882 +6,472 @@
 <title>Cyril Tuekam · DevOps Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e0d;
-    --bg2: #111715;
-    --bg3: #161d1a;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --accent: #1fdb8e;
-    --accent2: #0f9e5e;
-    --accent-dim: rgba(31,219,142,0.1);
-    --text: #e8f0ec;
-    --text2: #8a9e94;
-    --text3: #526058;
-    --mono: 'DM Mono', monospace;
-    --sans: 'Syne', sans-serif;
-    --radius: 10px;
-  }
+:root {
+  --bg: #080b09;
+  --bg2: #0e1410;
+  --bg3: #141d16;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --accent: #22c97a;
+  --accent2: #16a863;
+  --accent-dim: rgba(34,201,122,0.09);
+  --accent-glow: rgba(34,201,122,0.18);
+  --text: #deeae3;
+  --text2: #7d9688;
+  --text3: #435249;
+  --mono: 'DM Mono', monospace;
+  --display: 'Bebas Neue', cursive;
+  --sans: 'Instrument Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Grain overlay */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
 
-  html { scroll-behavior: smooth; }
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,11,9,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 clamp(1.5rem,5vw,5rem);height:54px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none;letter-spacing:.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--text3);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#041a0d;border:none;border-radius:5px;padding:7px 16px;font-family:var(--mono);font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:background .2s}
+.nav-cta:hover{background:#2de98a}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+main{padding-top:54px;position:relative;z-index:1}
+section{padding:clamp(4rem,8vw,7rem) clamp(1.5rem,5vw,5rem);max-width:1160px;margin:0 auto}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(10,14,13,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 clamp(1.5rem, 5vw, 4rem);
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: 0.03em;
-  }
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text2);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
+.sec-label{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:14px}
+.sec-label::before{content:'//';opacity:.5}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
 
-  /* ── LAYOUT ── */
-  main { padding-top: 56px; }
-  section {
-    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+/* HERO */
+#hero{min-height:calc(100vh - 54px);display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;padding-top:clamp(3rem,6vw,5rem)}
+.hero-left{}
+.hero-status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(34,201,122,0.18);border-radius:20px;padding:5px 14px;margin-bottom:2rem;letter-spacing:.04em}
+.hero-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero-name{font-family:var(--display);font-size:clamp(5rem,11vw,9.5rem);line-height:.92;letter-spacing:.02em;margin-bottom:1.2rem;color:var(--text)}
+.hero-name .outline{-webkit-text-stroke:1.5px var(--text3);color:transparent}
+.hero-tagline{font-family:var(--mono);font-size:clamp(.85rem,1.5vw,1rem);color:var(--text2);line-height:1.9;margin-bottom:2rem}
+.hero-tagline .hl{color:var(--accent)}
+.hero-desc{font-size:14px;color:var(--text2);line-height:1.85;max-width:480px;margin-bottom:2.5rem}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.btn-p{background:var(--accent);color:#041a0d;border:none;border-radius:6px;padding:12px 22px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background .2s,transform .15s}
+.btn-p:hover{background:#2de98a;transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--text2);border:1px solid var(--border2);border-radius:6px;padding:12px 22px;font-family:var(--sans);font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .2s}
+.btn-o:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
 
-  .section-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    max-width: 200px;
-  }
+/* Hero photo */
+.hero-right{position:relative}
+.hero-photo-wrap{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4}
+.hero-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:grayscale(15%) contrast(1.05)}
+.hero-photo-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, transparent 50%, rgba(8,11,9,.85) 100%)}
+.hero-photo-overlay{position:absolute;bottom:20px;left:20px;right:20px;z-index:2}
+.photo-tag{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(8,11,9,.7);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;display:inline-block;backdrop-filter:blur(8px)}
+.hero-border-deco{position:absolute;top:-12px;right:-12px;width:100px;height:100px;border-top:2px solid var(--accent);border-right:2px solid var(--accent);border-radius:0 12px 0 0;opacity:.4}
+.hero-border-deco2{position:absolute;bottom:-12px;left:-12px;width:100px;height:100px;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent);border-radius:0 0 0 12px;opacity:.4}
 
-  /* ── HERO ── */
-  #hero {
-    min-height: calc(100vh - 56px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: clamp(3rem, 6vw, 6rem);
-  }
-  .hero-tag {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    background: var(--accent-dim);
-    border: 1px solid rgba(31,219,142,0.2);
-    border-radius: 4px;
-    padding: 5px 12px;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.04em;
-  }
-  .hero-name {
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.5rem;
-  }
-  .hero-name .first { color: var(--text); }
-  .hero-name .last {
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255,255,255,0.3);
-  }
-  .hero-role {
-    font-family: var(--mono);
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    color: var(--text2);
-    margin-bottom: 2rem;
-    line-height: 1.8;
-  }
-  .hero-role span { color: var(--accent); }
-  .hero-desc {
-    max-width: 520px;
-    color: var(--text2);
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-  }
-  .hero-ctas {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: #04201a;
-    border: none;
-    border-radius: var(--radius);
-    padding: 12px 24px;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: #22eea0; transform: translateY(-1px); }
-  .btn-outline {
-    background: transparent;
-    color: var(--text2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    padding: 12px 24px;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: border-color 0.2s, color 0.2s, transform 0.15s;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+/* Stats bar */
+.stats-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:3rem}
+.stat{flex:1;padding:18px 20px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat .n{font-family:var(--display);font-size:2.4rem;color:var(--text);line-height:1}
+.stat .n span{color:var(--accent);font-size:1.6rem}
+.stat .l{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:.05em;text-transform:uppercase}
 
-  .hero-stats {
-    margin-top: 4rem;
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .stat-item .num {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1;
-  }
-  .stat-item .num span { color: var(--accent); }
-  .stat-item .lbl {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text3);
-    margin-top: 4px;
-    letter-spacing: 0.05em;
-  }
+/* STACK */
+.stack-cats{display:flex;flex-direction:column;gap:20px}
+.stack-cat-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.stack-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-family:var(--mono);font-size:12px;color:var(--text2);transition:border-color .2s,color .2s,background .2s;cursor:default}
+.pill:hover{border-color:var(--accent2);color:var(--accent);background:var(--accent-dim)}
+.pill.hot{border-color:rgba(34,201,122,.25);color:var(--accent)}
 
-  /* ── STACK ── */
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-  }
-  .stack-item {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .stack-item:hover {
-    border-color: var(--accent2);
-    background: var(--bg3);
-  }
-  .stack-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 7px;
-    background: var(--accent-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--accent);
-    flex-shrink: 0;
-    letter-spacing: 0;
-  }
-  .stack-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-  }
-  .stack-type {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text3);
-    margin-top: 1px;
-  }
+/* PROJETS */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.proj-card{background:var(--bg);padding:28px;transition:background .25s;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit}
+.proj-card:hover{background:var(--bg2)}
+.proj-card.span2{grid-column:span 2}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.proj-num{font-family:var(--display);font-size:3rem;color:var(--border2);line-height:1;transition:color .25s}
+.proj-card:hover .proj-num{color:var(--accent-glow)}
+.proj-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:4px;letter-spacing:.04em}
+.t-sec{background:rgba(34,201,122,.1);color:var(--accent)}
+.t-back{background:rgba(55,138,221,.1);color:#78b4f0}
+.t-tool{background:rgba(239,159,39,.1);color:#f5c04a}
+.t-net{background:rgba(180,94,234,.1);color:#c89ef5}
+.proj-title{font-family:var(--display);font-size:1.9rem;line-height:1.1;color:var(--text);letter-spacing:.03em}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.75;flex:1}
+.proj-metrics{display:flex;gap:16px;flex-wrap:wrap}
+.metric{font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-dim);border-radius:4px;padding:3px 9px}
+.proj-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.chip{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 8px}
+.proj-link-row{display:flex;gap:8px;margin-top:auto}
+.proj-link{font-family:var(--mono);font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:5px;padding:5px 12px;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.proj-link:hover{border-color:var(--accent);color:var(--accent)}
 
-  /* ── PROJETS ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-  .project-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: border-color 0.2s, transform 0.2s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .project-card:hover {
-    border-color: var(--border2);
-    transform: translateY(-3px);
-  }
-  .project-card.featured {
-    border-color: rgba(31,219,142,0.3);
-    background: linear-gradient(135deg, var(--bg2) 0%, rgba(31,219,142,0.04) 100%);
-  }
-  .proj-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .proj-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 3px 9px;
-    border-radius: 4px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-  .tag-devsecops { background: rgba(31,219,142,0.12); color: #1fdb8e; }
-  .tag-backend    { background: rgba(55,138,221,0.12); color: #64abf0; }
-  .tag-freelance  { background: rgba(239,159,39,0.12); color: #f5b84a; }
-  .tag-devops     { background: rgba(162,94,234,0.12); color: #c08cf5; }
-  .proj-links { display: flex; gap: 8px; }
-  .proj-link {
-    width: 28px; height: 28px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 13px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .proj-link:hover { border-color: var(--accent); color: var(--accent); }
-  .proj-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .proj-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.65;
-    flex: 1;
-  }
-  .proj-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
-  }
-  .proj-chip {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text3);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 8px;
-  }
+/* EXPÉRIENCES */
+.xp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.xp-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px 24px;transition:border-color .2s}
+.xp-card:hover{border-color:var(--border2)}
+.xp-period{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.06em;margin-bottom:8px}
+.xp-role{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px}
+.xp-company{font-family:var(--mono);font-size:12px;color:var(--text2);margin-bottom:10px}
+.xp-desc{font-size:12.5px;color:var(--text2);line-height:1.7}
+.xp-badge{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);background:var(--accent-dim);border-radius:3px;padding:2px 7px;margin-top:8px}
 
-  /* ── EXPÉRIENCES ── */
-  .timeline {
-    position: relative;
-    padding-left: 24px;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-  .xp-item {
-    position: relative;
-    padding-bottom: 2.5rem;
-  }
-  .xp-item:last-child { padding-bottom: 0; }
-  .xp-dot {
-    position: absolute;
-    left: -28px; top: 6px;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 0 1px var(--accent2);
-  }
-  .xp-period {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-  .xp-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .xp-company {
-    font-size: 13px;
-    color: var(--accent);
-    font-family: var(--mono);
-    margin-bottom: 8px;
-  }
-  .xp-text {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.7;
-    max-width: 560px;
-  }
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:start}
+.about-text p{color:var(--text2);font-size:14px;line-height:1.9;margin-bottom:1rem}
+.about-text strong{color:var(--text);font-weight:600}
+.about-quote{border-left:2px solid var(--accent);padding-left:20px;margin:1.5rem 0;font-style:italic;color:var(--text2);font-size:14px;line-height:1.8}
+.about-aside{display:flex;flex-direction:column;gap:10px}
+.aside-row{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:10px}
+.aside-icon{width:30px;height:30px;border-radius:7px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--accent);flex-shrink:0;font-family:var(--mono)}
+.aside-k{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
+.aside-v{font-size:12.5px;color:var(--text);font-weight:500;margin-top:1px}
+.lang-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:1rem}
+.lang{font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:5px;border:1px solid var(--border);color:var(--text2)}
+.lang.fr{border-color:rgba(34,201,122,.3);color:var(--accent)}
 
-  /* ── À PROPOS ── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-  }
-  .about-text p {
-    color: var(--text2);
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 1rem;
-  }
-  .about-text strong { color: var(--text); font-weight: 600; }
-  .about-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .meta-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-  }
-  .meta-icon {
-    width: 32px; height: 32px;
-    border-radius: 7px;
-    background: var(--accent-dim);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-  .meta-key {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.05em;
-  }
-  .meta-val {
-    font-size: 13px;
-    color: var(--text);
-    font-weight: 500;
-    margin-top: 1px;
-  }
-  .lang-badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  }
-  .lang-badge {
-    font-family: var(--mono);
-    font-size: 12px;
-    padding: 5px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    color: var(--text2);
-  }
-  .lang-badge.native { border-color: var(--accent2); color: var(--accent); }
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-big{font-family:var(--display);font-size:clamp(3rem,7vw,5.5rem);line-height:.95;letter-spacing:.03em;margin-bottom:1rem}
+.contact-big .g{-webkit-text-stroke:1px var(--text3);color:transparent}
+.contact-sub{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:2rem;max-width:380px}
+.contact-cards{display:flex;flex-direction:column;gap:8px}
+.c-card{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text2);font-size:13px;padding:13px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:all .2s}
+.c-card:hover{border-color:var(--accent2);color:var(--text);background:var(--bg3)}
+.c-icon{width:32px;height:32px;border-radius:7px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--accent);flex-shrink:0;font-family:var(--mono);font-weight:500}
+.c-k{font-family:var(--mono);font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.c-v{font-size:12.5px;color:var(--text);margin-top:1px}
 
-  /* ── CONTACT ── */
-  #contact {
-    border-top: 1px solid var(--border);
-  }
-  .contact-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-  .contact-headline {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-  }
-  .contact-headline span { color: var(--accent); }
-  .contact-sub {
-    color: var(--text2);
-    font-size: 14px;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--text2);
-    font-size: 14px;
-    padding: 12px 16px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .contact-link:hover { border-color: var(--accent2); color: var(--text); }
-  .contact-link .icon {
-    width: 32px; height: 32px;
-    border-radius: 7px;
-    background: var(--accent-dim);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
+footer{border-top:1px solid var(--border);padding:1.8rem clamp(1.5rem,5vw,5rem);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--text3);max-width:1160px;margin:0 auto}
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem clamp(1.5rem, 5vw, 4rem);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text3);
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-  /* ── ANIMATIONS ── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 700px) {
-    .nav-links { display: none; }
-    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 24px; }
-    .hero-stats { gap: 1.5rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-  }
+/* Responsive */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;gap:40px}
+  .hero-right{order:-1;max-width:300px;margin:0 auto}
+  .hero-name{font-size:clamp(4rem,15vw,7rem)}
+  .projects-grid{grid-template-columns:1fr}
+  .proj-card.span2{grid-column:span 1}
+  .xp-grid{grid-template-columns:1fr}
+  .about-wrap{grid-template-columns:1fr;gap:24px}
+  .contact-grid{grid-template-columns:1fr;gap:28px}
+  .nav-links{display:none}
+  .stats-bar{flex-direction:column}
+  .stat{border-right:none;border-bottom:1px solid var(--border)}
+  .stat:last-child{border-bottom:none}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="#hero">~/cyril-tuekam</a>
+  <a class="nav-logo" href="#hero">cyril-tuekam.dev</a>
   <ul class="nav-links">
     <li><a href="#stack">stack</a></li>
     <li><a href="#projects">projets</a></li>
-    <li><a href="#experience">expériences</a></li>
-    <li><a href="#about">à propos</a></li>
+    <li><a href="#experience">parcours</a></li>
+    <li><a href="#about">about</a></li>
     <li><a href="#contact">contact</a></li>
   </ul>
+  <a href="cv_Cyril.pdf" class="nav-cta" download>CV ↓</a>
 </nav>
 
 <main>
 
-  <!-- ── HERO ── -->
-  <section id="hero">
-    <div class="hero-tag">&#x25CF;&nbsp; Ouvert aux alternances &mdash; Sept. 2026</div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-status">Disponible · Alternance sept. 2026</div>
     <h1 class="hero-name">
-      <span class="first">Cyril&nbsp;</span><br>
-      <span class="last">Tuekam</span>
+      CYRIL<br><span class="outline">TUEKAM</span>
     </h1>
-    <p class="hero-role">
-      Ingénieur <span>DevOps / DevSecOps</span> en formation &nbsp;&middot;&nbsp;
-      3iL Ingénieurs Limoges<br>
-      AWS &middot; Kubernetes &middot; Terraform &middot; CI/CD &middot; Docker
+    <p class="hero-tagline">
+      Ingénieur <span class="hl">DevOps / DevSecOps</span> en formation<br>
+      AWS · Kubernetes · Terraform · CI/CD · Docker
     </p>
     <p class="hero-desc">
-      Étudiant Bac+5 passionné par l'automatisation, la sécurité des infrastructures et la culture DevOps. 
-      Je construis des pipelines fiables, des infras scalables et je cherche une alternance pour septembre 2026.
+      Étudiant Bac+5 à 3iL Ingénieurs, Limoges. Deux ans d'expérience terrain 
+      entre Yaoundé et la France. Je construis des infrastructures fiables, 
+      des pipelines sécurisés, et j'ambitionne de devenir CTO.
     </p>
     <div class="hero-ctas">
-      <a href="cv-cyril-tuekam.pdf" class="btn-primary" download>
-        &#x2193;&nbsp; Télécharger CV
-      </a>
-      <a href="https://github.com/cyril-tuekam" class="btn-outline" target="_blank" rel="noopener">
-        GitHub &nbsp;&#x2197;
-      </a>
-      <a href="https://linkedin.com/in/cyril-tuekam-8a5584205" class="btn-outline" target="_blank" rel="noopener">
-        LinkedIn &nbsp;&#x2197;
-      </a>
+      <a href="cv_Cyril.pdf" class="btn-p" download>↓ Télécharger CV</a>
+      <a href="https://github.com/cyril-tuekam" class="btn-o" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://linkedin.com/in/cyril-tuekam-8a5584205" class="btn-o" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="num">3<span>+</span></div>
-        <div class="lbl">années d'expérience</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">5<span>+</span></div>
-        <div class="lbl">projets livrés</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">15<span>+</span></div>
-        <div class="lbl">outils maîtrisés</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">3</div>
-        <div class="lbl">langues parlées</div>
+    <div class="stats-bar reveal">
+      <div class="stat"><div class="n">2<span>ans</span></div><div class="l">d'expérience</div></div>
+      <div class="stat"><div class="n">+20<span>%</span></div><div class="l">efficacité chez Findme</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">projets en prod</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">langues & pays</div></div>
+    </div>
+  </div>
+  <div class="hero-right reveal">
+    <div class="hero-border-deco"></div>
+    <div class="hero-border-deco2"></div>
+    <div class="hero-photo-wrap">
+      <img src="images/professionnel.png" alt="Cyril Tuekam">
+      <div class="hero-photo-overlay">
+        <span class="photo-tag">~/cyril · Limoges, France</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── STACK ── -->
-  <section id="stack">
-    <div class="section-label">Stack technique</div>
-    <div class="stack-grid">
-      <div class="stack-item"><div class="stack-icon">K8s</div><div><div class="stack-name">Kubernetes</div><div class="stack-type">Orchestration</div></div></div>
-      <div class="stack-item"><div class="stack-icon">TF</div><div><div class="stack-name">Terraform</div><div class="stack-type">IaC</div></div></div>
-      <div class="stack-item"><div class="stack-icon">&#x1F433;</div><div><div class="stack-name">Docker</div><div class="stack-type">Conteneurs</div></div></div>
-      <div class="stack-item"><div class="stack-icon">AWS</div><div><div class="stack-name">AWS</div><div class="stack-type">Cloud</div></div></div>
-      <div class="stack-item"><div class="stack-icon">GCP</div><div><div class="stack-name">GCP</div><div class="stack-type">Cloud</div></div></div>
-      <div class="stack-item"><div class="stack-icon">JK</div><div><div class="stack-name">Jenkins</div><div class="stack-type">CI/CD</div></div></div>
-      <div class="stack-item"><div class="stack-icon">GA</div><div><div class="stack-name">GitHub Actions</div><div class="stack-type">CI/CD</div></div></div>
-      <div class="stack-item"><div class="stack-icon">GF</div><div><div class="stack-name">Grafana</div><div class="stack-type">Monitoring</div></div></div>
-      <div class="stack-item"><div class="stack-icon">PR</div><div><div class="stack-name">Prometheus</div><div class="stack-type">Monitoring</div></div></div>
-      <div class="stack-item"><div class="stack-icon">OS</div><div><div class="stack-name">OpenShift</div><div class="stack-type">PaaS</div></div></div>
-      <div class="stack-item"><div class="stack-icon">PY</div><div><div class="stack-name">Python</div><div class="stack-type">FastAPI / Django</div></div></div>
-      <div class="stack-item"><div class="stack-icon">LX</div><div><div class="stack-name">Linux</div><div class="stack-type">Bash / Shell</div></div></div>
-      <div class="stack-item"><div class="stack-icon">VM</div><div><div class="stack-name">VMware</div><div class="stack-type">Virtualisation</div></div></div>
-      <div class="stack-item"><div class="stack-icon">TV</div><div><div class="stack-name">Trivy</div><div class="stack-type">Sécurité</div></div></div>
+<!-- STACK -->
+<section id="stack">
+  <div class="sec-label">Stack technique</div>
+  <div class="stack-cats reveal">
+    <div>
+      <div class="stack-cat-label">Cloud & Infrastructure</div>
+      <div class="stack-pills">
+        <span class="pill hot">AWS</span>
+        <span class="pill hot">GCP</span>
+        <span class="pill hot">Terraform</span>
+        <span class="pill">VMware</span>
+        <span class="pill">Hyper-V</span>
+        <span class="pill">Control M</span>
+        <span class="pill">Windows Server</span>
+        <span class="pill">Linux</span>
+      </div>
     </div>
-  </section>
-
-  <!-- ── PROJETS ── -->
-  <section id="projects">
-    <div class="section-label">Projets phares</div>
-    <div class="projects-grid">
-
-      <a class="project-card featured" href="#" target="_blank">
-        <div class="proj-header">
-          <span class="proj-tag tag-devsecops">DevSecOps</span>
-          <div class="proj-links">
-            <span class="proj-link" title="GitHub">&#x2197;</span>
-          </div>
-        </div>
-        <div class="proj-title">Plateforme DevSecOps</div>
-        <div class="proj-desc">
-          Pipeline CI/CD end-to-end avec scan automatique de vulnérabilités, 
-          déploiement Kubernetes et infrastructure as code. 
-          Projet de fin d'études — équipe de 4, rôle de chef de projet.
-        </div>
-        <div class="proj-chips">
-          <span class="proj-chip">Terraform</span>
-          <span class="proj-chip">Kubernetes</span>
-          <span class="proj-chip">Trivy</span>
-          <span class="proj-chip">Jenkins</span>
-          <span class="proj-chip">Docker</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank">
-        <div class="proj-header">
-          <span class="proj-tag tag-backend">Backend</span>
-          <div class="proj-links">
-            <span class="proj-link">&#x2197;</span>
-          </div>
-        </div>
-        <div class="proj-title">HackHub</div>
-        <div class="proj-desc">
-          Plateforme de gestion de hackathons — développement du backend 
-          REST en Java/Spring. Collaboration en équipe avec GitFlow.
-        </div>
-        <div class="proj-chips">
-          <span class="proj-chip">Java</span>
-          <span class="proj-chip">Spring Boot</span>
-          <span class="proj-chip">REST API</span>
-          <span class="proj-chip">GitFlow</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank">
-        <div class="proj-header">
-          <span class="proj-tag tag-devops">DevOps</span>
-          <div class="proj-links">
-            <span class="proj-link">&#x2197;</span>
-          </div>
-        </div>
-        <div class="proj-title">Stage Findme — CI/CD & Cloud</div>
-        <div class="proj-desc">
-          Mise en place d'une chaîne CI/CD et d'une infrastructure cloud 
-          pour une startup. Automatisation des déploiements et monitoring.
-        </div>
-        <div class="proj-chips">
-          <span class="proj-chip">CI/CD</span>
-          <span class="proj-chip">Docker</span>
-          <span class="proj-chip">Cloud</span>
-          <span class="proj-chip">Monitoring</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank">
-        <div class="proj-header">
-          <span class="proj-tag tag-freelance">Freelance</span>
-          <div class="proj-links">
-            <span class="proj-link">&#x2197;</span>
-          </div>
-        </div>
-        <div class="proj-title">Projets clients indépendants</div>
-        <div class="proj-desc">
-          Développement web et automatisation pour différents clients 
-          depuis début 2026. Livrables orientés performance et maintenabilité.
-        </div>
-        <div class="proj-chips">
-          <span class="proj-chip">JavaScript</span>
-          <span class="proj-chip">Docker</span>
-          <span class="proj-chip">Python</span>
-        </div>
-      </a>
-
+    <div>
+      <div class="stack-cat-label">CI/CD & Containers</div>
+      <div class="stack-pills">
+        <span class="pill hot">Docker</span>
+        <span class="pill hot">Kubernetes</span>
+        <span class="pill hot">Jenkins</span>
+        <span class="pill hot">GitHub Actions</span>
+        <span class="pill">Artifactory</span>
+        <span class="pill">GitFlow</span>
+        <span class="pill">Bitbucket</span>
+        <span class="pill">OpenShift</span>
+      </div>
     </div>
-  </section>
+    <div>
+      <div class="stack-cat-label">DevSecOps & Monitoring</div>
+      <div class="stack-pills">
+        <span class="pill hot">Trivy</span>
+        <span class="pill hot">Grafana</span>
+        <span class="pill hot">Prometheus</span>
+        <span class="pill">Wireshark</span>
+        <span class="pill">Packet Tracer</span>
+        <span class="pill">Google Analytics</span>
+      </div>
+    </div>
+    <div>
+      <div class="stack-cat-label">Dev & Scripting</div>
+      <div class="stack-pills">
+        <span class="pill hot">Python</span>
+        <span class="pill hot">FastAPI</span>
+        <span class="pill">Django</span>
+        <span class="pill">Java</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">Bash / Shell</span>
+        <span class="pill">SQL / PostgreSQL</span>
+        <span class="pill">C</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- ── EXPÉRIENCES ── -->
-  <section id="experience">
-    <div class="section-label">Expériences</div>
-    <div class="timeline">
+<!-- PROJETS -->
+<section id="projects">
+  <div class="sec-label">Projets phares</div>
+  <div class="projects-grid reveal">
 
-      <div class="xp-item">
-        <div class="xp-dot"></div>
-        <div class="xp-period">Sept. 2025 – Sept. 2028</div>
-        <div class="xp-title">Étudiant ingénieur DevOps/DevSecOps</div>
+    <a class="proj-card span2" href="#" target="_blank">
+      <div class="proj-top">
+        <div class="proj-num">01</div>
+        <span class="proj-tag t-sec">DevSecOps</span>
+      </div>
+      <div class="proj-title">Plateforme de déploiement sécurisée</div>
+      <div class="proj-desc">Chef de projet d'une équipe de 4. Infrastructure cloud automatisée avec Terraform et Kubernetes, pipeline CI/CD sécurisé avec scan de vulnérabilités Docker via Trivy, gestion des secrets et surveillance de la conformité.</div>
+      <div class="proj-metrics">
+        <span class="metric">Équipe de 4</span>
+        <span class="metric">En cours</span>
+        <span class="metric">Chef de projet</span>
+      </div>
+      <div class="proj-chips">
+        <span class="chip">Terraform</span><span class="chip">Kubernetes</span><span class="chip">Trivy</span><span class="chip">Docker</span><span class="chip">Jenkins</span><span class="chip">CI/CD</span>
+      </div>
+      <div class="proj-link-row">
+        <a class="proj-link" href="https://github.com/cyril-tuekam" target="_blank">GitHub ↗</a>
+      </div>
+    </a>
+
+    <a class="proj-card" href="https://github.com/cyril-tuekam" target="_blank">
+      <div class="proj-top">
+        <div class="proj-num">02</div>
+        <span class="proj-tag t-back">Backend</span>
+      </div>
+      <div class="proj-title">HackHub</div>
+      <div class="proj-desc">Plateforme de gestion de hackathons. Backend REST en Java/Spring Boot. Collaboration en équipe avec GitFlow, gestion des branches et merge requests.</div>
+      <div class="proj-chips">
+        <span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">REST API</span><span class="chip">GitFlow</span><span class="chip">PostgreSQL</span>
+      </div>
+      <div class="proj-link-row">
+        <a class="proj-link" href="https://github.com/cyril-tuekam" target="_blank">GitHub ↗</a>
+      </div>
+    </a>
+
+    <a class="proj-card" href="https://github.com/cyril-tuekam/password-analyzer" target="_blank">
+      <div class="proj-top">
+        <div class="proj-num">03</div>
+        <span class="proj-tag t-tool">Outil · Sécu</span>
+      </div>
+      <div class="proj-title">Password Analyzer</div>
+      <div class="proj-desc">Analyseur de force de mots de passe développé en Python. Évalue l'entropie, détecte les patterns faibles et les mots de passe compromis. Outil CLI léger orienté DevSecOps.</div>
+      <div class="proj-chips">
+        <span class="chip">Python</span><span class="chip">Sécurité</span><span class="chip">CLI</span><span class="chip">DevSecOps</span>
+      </div>
+      <div class="proj-link-row">
+        <a class="proj-link" href="https://github.com/cyril-tuekam/password-analyzer" target="_blank">GitHub ↗</a>
+      </div>
+    </a>
+
+    <a class="proj-card" href="#" target="_blank">
+      <div class="proj-top">
+        <div class="proj-num">04</div>
+        <span class="proj-tag t-net">Réseau</span>
+      </div>
+      <div class="proj-title">Analyseur réseaux & protocoles</div>
+      <div class="proj-desc">Surveillance et analyse des protocoles réseau (TCP, DNS, ARP, UDP) via Wireshark et Packet Tracer — cartographie des flux et renforcement de la sécurité réseau.</div>
+      <div class="proj-chips">
+        <span class="chip">Wireshark</span><span class="chip">Packet Tracer</span><span class="chip">TCP/IP</span><span class="chip">DNS</span><span class="chip">ARP</span>
+      </div>
+      <div class="proj-link-row">
+        <a class="proj-link" href="https://github.com/cyril-tuekam" target="_blank">GitHub ↗</a>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="experience">
+  <div class="sec-label">Parcours</div>
+  <div class="xp-grid reveal">
+
+    <div class="xp-card">
+      <div class="xp-period">06/2025 – 08/2025</div>
+      <div class="xp-role">Ingénieur DevOps</div>
+      <div class="xp-company">Findme · Yaoundé / France</div>
+      <div class="xp-desc">Développement et déploiement d'applications web en démarche DevOps : APIs sécurisées (FastAPI/PostgreSQL), automatisation de pipeline CI/CD, intégration front-end (Figma/Tailwind CSS).</div>
+      <span class="xp-badge">+20% d'efficacité</span>
+    </div>
+
+    <div class="xp-card">
+      <div class="xp-period">Depuis 01/2026</div>
+      <div class="xp-role">Développeur Freelance</div>
+      <div class="xp-company">Indépendant · Limoges</div>
+      <div class="xp-desc">Développement et livraison de solutions web sur mesure pour des clients variés. Gestion autonome des projets de la conception à la mise en production.</div>
+    </div>
+
+    <div class="xp-card">
+      <div class="xp-period">Depuis 11/2024</div>
+      <div class="xp-role">Assistant Développeur & Bénévole</div>
+      <div class="xp-company">Là pour toi! · Remote</div>
+      <div class="xp-desc">Aide à la mise en place et au maintien d'une plateforme web associative. Accompagnement de victimes de violences sexuelles et sexistes, organisation d'événements.</div>
+    </div>
+
+    <div class="xp-card">
+      <div class="xp-period">06/2024 – 08/2024</div>
+      <div class="xp-role">Développeur Informatique</div>
+      <div class="xp-company">BeWeb · Yaoundé / France</div>
+      <div class="xp-desc">Développement et maintenance d'infrastructures WordPress : personnalisation de sites, optimisation SEO, monitoring Linux et automatisation Bash en méthodologie CI/CD.</div>
+      <span class="xp-badge">-30% temps de publication</span>
+    </div>
+
+  </div>
+
+  <!-- Formation -->
+  <div style="margin-top:2rem" class="reveal">
+    <div class="stack-cat-label" style="margin-bottom:14px">Formation</div>
+    <div class="xp-grid">
+      <div class="xp-card">
+        <div class="xp-period">09/2025 – 09/2028</div>
+        <div class="xp-role">Ingénieur DevOps</div>
         <div class="xp-company">3iL Ingénieurs · Limoges</div>
-        <div class="xp-text">
-          Programme Bac+5. Ambassadeur de l'école. Projets pratiques en CI/CD, 
-          sécurité des infrastructures, cloud et développement logiciel.
-        </div>
+        <div class="xp-desc">Bac+5. Ambassadeur de l'école. Sécurité CI/CD, cloud, automatisation, projets pratiques.</div>
       </div>
-
-      <div class="xp-item">
-        <div class="xp-dot"></div>
-        <div class="xp-period">Début 2026 – présent</div>
-        <div class="xp-title">Développeur freelance</div>
-        <div class="xp-company">Indépendant</div>
-        <div class="xp-text">
-          Développement et livraison de solutions web sur mesure pour des clients variés. 
-          Gestion autonome des projets de la conception à la mise en production.
-        </div>
-      </div>
-
-      <div class="xp-item">
-        <div class="xp-dot"></div>
-        <div class="xp-period">Nov. 2024 – présent</div>
-        <div class="xp-title">Développeur assistant bénévole</div>
-        <div class="xp-company">Là pour toi! · Bénévolat</div>
-        <div class="xp-text">
-          Contribution au développement de la plateforme associative. 
-          Participation aux choix techniques et aux cycles de livraison.
-        </div>
-      </div>
-
-      <div class="xp-item">
-        <div class="xp-dot"></div>
-        <div class="xp-period">Été 2025</div>
-        <div class="xp-title">Stagiaire DevOps</div>
-        <div class="xp-company">Findme</div>
-        <div class="xp-text">
-          Mise en place de pipelines CI/CD et infrastructure cloud. 
-          Conteneurisation des services avec Docker, monitoring avec Grafana/Prometheus.
-        </div>
-      </div>
-
-      <div class="xp-item">
-        <div class="xp-dot"></div>
-        <div class="xp-period">Été 2024</div>
-        <div class="xp-title">Développeur</div>
-        <div class="xp-company">BeWeb</div>
-        <div class="xp-text">
-          Développement d'interfaces web et de fonctionnalités back-end. 
-          Travail en équipe Agile.
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── À PROPOS ── -->
-  <section id="about">
-    <div class="section-label">À propos</div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>
-          Je suis <strong>Cyril Tuekam</strong>, ingénieur DevOps en formation à 3iL Ingénieurs 
-          (Limoges), avec une ambition à long terme de devenir <strong>CTO</strong>.
-        </p>
-        <p>
-          Mon parcours mêle des bases solides en CPGE MPSI à Yaoundé, 
-          une curiosité pour la sécurité des systèmes, et une expérience 
-          terrain en startup et freelance dès mes premières années d'études.
-        </p>
-        <p>
-          Je suis à la recherche d'une <strong>alternance DevOps/DevSecOps</strong> 
-          à partir de septembre 2026 (24-36 mois), ouvert à Paris, Lyon, 
-          Marseille, Montpellier ou Limoges.
-        </p>
-        <div class="lang-badges">
-          <span class="lang-badge native">Français — natif</span>
-          <span class="lang-badge">Anglais — B2</span>
-          <span class="lang-badge">Allemand — B1</span>
-        </div>
-      </div>
-      <div class="about-meta">
-        <div class="meta-row">
-          <div class="meta-icon">&#x1F4CD;</div>
-          <div><div class="meta-key">LOCALISATION</div><div class="meta-val">Limoges, France · Permis B + véhicule</div></div>
-        </div>
-        <div class="meta-row">
-          <div class="meta-icon">&#x1F393;</div>
-          <div><div class="meta-key">FORMATION</div><div class="meta-val">Bac+5 DevOps · 3iL Ingénieurs</div></div>
-        </div>
-        <div class="meta-row">
-          <div class="meta-icon">&#x1F4BC;</div>
-          <div><div class="meta-key">RECHERCHE</div><div class="meta-val">Alternance DevOps/DevSecOps · Sept. 2026</div></div>
-        </div>
-        <div class="meta-row">
-          <div class="meta-icon">&#x2665;</div>
-          <div><div class="meta-key">INTÉRÊTS</div><div class="meta-val">Échecs · Natation · Football · Cuisine</div></div>
-        </div>
+      <div class="xp-card">
+        <div class="xp-period">09/2023 – 06/2025</div>
+        <div class="xp-role">CPGE MPSI</div>
+        <div class="xp-company">Institut Prépavogt · Yaoundé, Cameroun</div>
+        <div class="xp-desc">Vice-président du club Informatique 2023–2025. Bases solides en mathématiques et informatique théorique.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── CONTACT ── -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div>
-        <div class="section-label">Contact</div>
-        <h2 class="contact-headline">
-          Travaillons<br><span>ensemble</span>
-        </h2>
-        <p class="contact-sub">
-          Recruteur, client ou collaborateur — n'hésitez pas à me contacter 
-          pour discuter d'opportunités d'alternance ou de projets freelance.
-        </p>
-        <a href="cv-cyril-tuekam.pdf" class="btn-primary" download style="display:inline-flex;">
-          &#x2193;&nbsp; Télécharger le CV
-        </a>
-      </div>
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:tuekamcyril@gmail.com">
-          <div class="icon">&#x2709;</div>
-          <div><div style="font-size:11px;color:var(--text3);font-family:var(--mono)">EMAIL</div><div>tuekamcyril@gmail.com</div></div>
-        </a>
-        <a class="contact-link" href="tel:+33760254779">
-          <div class="icon">&#x260E;</div>
-          <div><div style="font-size:11px;color:var(--text3);font-family:var(--mono)">TÉLÉPHONE</div><div>07 60 25 47 79</div></div>
-        </a>
-        <a class="contact-link" href="https://linkedin.com/in/cyril-tuekam-8a5584205" target="_blank" rel="noopener">
-          <div class="icon">in</div>
-          <div><div style="font-size:11px;color:var(--text3);font-family:var(--mono)">LINKEDIN</div><div>cyril-tuekam-8a5584205</div></div>
-        </a>
-        <a class="contact-link" href="https://github.com/cyril-tuekam" target="_blank" rel="noopener">
-          <div class="icon">&lt;/&gt;</div>
-          <div><div style="font-size:11px;color:var(--text3);font-family:var(--mono)">GITHUB</div><div>github.com/cyril-tuekam</div></div>
-        </a>
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-label">À propos</div>
+  <div class="about-wrap reveal">
+    <div class="about-text">
+      <p>Je m'appelle <strong>Cyril Olympio Tuekam</strong>. Né au Cameroun, formé en CPGE à Yaoundé, je poursuis aujourd'hui un cycle ingénieur DevOps à <strong>3iL Ingénieurs</strong> à Limoges.</p>
+      <p>Mon parcours mêle rigueur des classes prépas, expérience terrain en startup (Findme, BeWeb) et engagement bénévole avec l'association <strong>Là pour toi!</strong>. J'ai appris à livrer vite, à travailler en équipe dispersée, et à ne pas avoir peur des stacks inconnues.</p>
+      <blockquote class="about-quote">
+        "Mon objectif à long terme est de devenir <strong>CTO</strong>. Cette alternance est un pivot stratégique dans ce parcours, pas une simple continuité d'études."
+      </blockquote>
+      <p>Je cherche une <strong>alternance DevOps/DevSecOps</strong> de 24 à 36 mois dès septembre 2026, à Lyon, Limoges, Paris, Marseille ou Montpellier. Permis B, véhicule, mobilité garantie.</p>
+      <div class="lang-row">
+        <span class="lang fr">Français — natif</span>
+        <span class="lang">Anglais — B2</span>
+        <span class="lang">Allemand — B1</span>
       </div>
     </div>
-  </section>
+    <div class="about-aside">
+      <div class="aside-row"><div class="aside-icon">📍</div><div><div class="aside-k">Localisation</div><div class="aside-v">Limoges · Permis B + véhicule</div></div></div>
+      <div class="aside-row"><div class="aside-icon">🎓</div><div><div class="aside-k">Formation</div><div class="aside-v">Bac+5 DevOps · 3iL Ingénieurs</div></div></div>
+      <div class="aside-row"><div class="aside-icon">💼</div><div><div class="aside-k">Recherche</div><div class="aside-v">Alternance DevOps/DevSecOps · Sept. 2026</div></div></div>
+      <div class="aside-row"><div class="aside-icon">🌍</div><div><div class="aside-k">Mobilité</div><div class="aside-v">Lyon · Paris · Marseille · Montpellier · Limoges</div></div></div>
+      <div class="aside-row"><div class="aside-icon">♟</div><div><div class="aside-k">Loisirs</div><div class="aside-v">Échecs · Natation · Football · Cuisine</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="border-top:1px solid var(--border)">
+  <div class="contact-grid reveal">
+    <div>
+      <div class="contact-big">TRAVAILLONS<br><span class="g">ENSEMBLE</span></div>
+      <p class="contact-sub">Recruteur, client ou collaborateur — je suis disponible pour discuter d'opportunités d'alternance ou de projets freelance.</p>
+      <a href="cv_Cyril.pdf" class="btn-p" download>↓ Télécharger le CV</a>
+    </div>
+    <div class="contact-cards">
+      <a class="c-card" href="mailto:tuekamcyril@gmail.com"><div class="c-icon">@</div><div><div class="c-k">Email</div><div class="c-v">tuekamcyril@gmail.com</div></div></a>
+      <a class="c-card" href="tel:+33760254779"><div class="c-icon">☎</div><div><div class="c-k">Téléphone</div><div class="c-v">07 60 25 47 79</div></div></a>
+      <a class="c-card" href="https://linkedin.com/in/cyril-tuekam-8a5584205" target="_blank" rel="noopener"><div class="c-icon">in</div><div><div class="c-k">LinkedIn</div><div class="c-v">cyril-tuekam-8a5584205</div></div></a>
+      <a class="c-card" href="https://github.com/cyril-tuekam" target="_blank" rel="noopener"><div class="c-icon">&lt;/&gt;</div><div><div class="c-k">GitHub</div><div class="c-v">github.com/cyril-tuekam</div></div></a>
+    </div>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <span>© 2026 Cyril Tuekam</span>
-  <span>Fait avec &#x2665; &amp; GitHub Pages</span>
+  <span>© 2026 Cyril Olympio Tuekam</span>
+  <span style="color:var(--text3)">Limoges · Disponible dès sept. 2026</span>
 </footer>
 
 <script>
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.stack-item, .project-card, .xp-item, .meta-row').forEach(el => {
-    el.classList.add('fade-up');
-    obs.observe(el);
-  });
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
-
 </body>
 </html>

@@ -156,6 +156,18 @@ footer{border-top:1px solid var(--border);padding:1.8rem clamp(1.5rem,5vw,5rem);
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
 .reveal.vis{opacity:1;transform:translateY(0)}
 
+/* Project screenshots */
+.proj-screenshots{position:relative;border-radius:8px;overflow:hidden;margin-top:4px;aspect-ratio:16/7;background:var(--bg3);border:1px solid var(--border)}
+.proj-screenshots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .5s ease}
+.proj-screenshots img.active{opacity:1}
+.proj-screenshots .scr-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2}
+.scr-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
+.scr-dot.on{background:var(--accent)}
+.proj-screenshots .scr-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,11,9,.7);border:1px solid var(--border2);border-radius:5px;color:var(--text2);font-size:13px;padding:4px 8px;cursor:pointer;z-index:2;transition:color .2s,border-color .2s}
+.proj-screenshots .scr-nav:hover{color:var(--accent);border-color:var(--accent)}
+.scr-prev{left:8px}
+.scr-next{right:8px}
+
 /* Responsive */
 @media(max-width:900px){
   #hero{grid-template-columns:1fr;gap:40px}
@@ -311,20 +323,32 @@ footer{border-top:1px solid var(--border);padding:1.8rem clamp(1.5rem,5vw,5rem);
       </div>
     </a>
 
-    <a class="proj-card" href="https://github.com/cyril-tuekam" target="_blank">
+    <div class="proj-card" onclick="void(0)">
       <div class="proj-top">
         <div class="proj-num">02</div>
         <span class="proj-tag t-back">Backend</span>
       </div>
       <div class="proj-title">HackHub</div>
-      <div class="proj-desc">Plateforme de gestion de hackathons. Backend REST en Java/Spring Boot. Collaboration en équipe avec GitFlow, gestion des branches et merge requests.</div>
+      <div class="proj-screenshots" id="hh-scr">
+        <img src="images/Screenshot_2026-05-27_085049.png" alt="HackHub — Accueil" class="active">
+        <img src="images/Screenshot_2026-05-27_085115.png" alt="HackHub — Tableau de bord">
+        <img src="images/Screenshot_2026-05-27_085231.png" alt="HackHub — Épreuves">
+        <button class="scr-nav scr-prev" onclick="hhNav(-1,event)">&#8592;</button>
+        <button class="scr-nav scr-next" onclick="hhNav(1,event)">&#8594;</button>
+        <div class="scr-dots">
+          <div class="scr-dot on" onclick="hhGo(0,event)"></div>
+          <div class="scr-dot" onclick="hhGo(1,event)"></div>
+          <div class="scr-dot" onclick="hhGo(2,event)"></div>
+        </div>
+      </div>
+      <div class="proj-desc">Plateforme complète de gestion de hackathons : tableau de bord, classements en temps réel, gestion des équipes, épreuves et récompenses. Backend REST Java/Spring Boot, travail en équipe avec GitFlow.</div>
       <div class="proj-chips">
         <span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">REST API</span><span class="chip">GitFlow</span><span class="chip">PostgreSQL</span>
       </div>
       <div class="proj-link-row">
-        <a class="proj-link" href="https://github.com/cyril-tuekam" target="_blank">GitHub ↗</a>
+        <a class="proj-link" href="https://github.com/cyril-tuekam" target="_blank" onclick="event.stopPropagation()">GitHub ↗</a>
       </div>
-    </a>
+    </div>
 
     <a class="proj-card" href="https://github.com/cyril-tuekam/password-analyzer" target="_blank">
       <div class="proj-top">
@@ -472,6 +496,29 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// HackHub carousel
+let hhIdx = 0;
+function hhUpdate() {
+  const scr = document.getElementById('hh-scr');
+  if (!scr) return;
+  const imgs = scr.querySelectorAll('img');
+  const dots = scr.querySelectorAll('.scr-dot');
+  imgs.forEach((img, i) => img.classList.toggle('active', i === hhIdx));
+  dots.forEach((d, i) => d.classList.toggle('on', i === hhIdx));
+}
+function hhNav(dir, e) {
+  e.stopPropagation();
+  const total = document.getElementById('hh-scr').querySelectorAll('img').length;
+  hhIdx = (hhIdx + dir + total) % total;
+  hhUpdate();
+}
+function hhGo(i, e) {
+  e.stopPropagation();
+  hhIdx = i;
+  hhUpdate();
+}
+setInterval(() => { hhIdx = (hhIdx + 1) % 3; hhUpdate(); }, 3000);
 </script>
 </body>
 </html>

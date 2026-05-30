@@ -1,715 +1,1059 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cyril Tuekam · DevOps & DevSecOps Engineer</title>
+<title>Cyril Tuekam · DevOps & DevSecOps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --blue: #2563EB;
-  --blue-light: #3B82F6;
-  --blue-dim: rgba(37,99,235,0.10);
-  --blue-glow: rgba(37,99,235,0.22);
-  --transition: 0.35s cubic-bezier(.4,0,.2,1);
-}
-[data-theme="dark"] {
-  --bg: #07090f;
-  --bg2: #0d1117;
-  --bg3: #131929;
-  --bg4: #1a2236;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.13);
-  --text: #e8edf5;
-  --text2: #7b8fa8;
-  --text3: #3a4d63;
-  --card-bg: #0d1117;
-  --nav-bg: rgba(7,9,15,0.92);
-  --tag-bg: rgba(255,255,255,0.05);
-}
-[data-theme="light"] {
-  --bg: #f4f6fb;
-  --bg2: #ffffff;
-  --bg3: #eef1f8;
-  --bg4: #e4e9f4;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.14);
-  --text: #0d1117;
-  --text2: #4a5568;
-  --text3: #9aabbf;
-  --card-bg: #ffffff;
-  --nav-bg: rgba(244,246,251,0.92);
-  --tag-bg: rgba(0,0,0,0.05);
+  --anthracite: #1a1c1e;
+  --anthracite2: #22252a;
+  --anthracite3: #2d3138;
+  --or: #c9a84c;
+  --or-light: #e2c06a;
+  --or-dim: rgba(201,168,76,0.10);
+  --or-glow: rgba(201,168,76,0.20);
+  --cream: #f0ebe0;
+  --cream2: #d4cdb8;
+  --smoke: #8a8880;
+  --shadow: rgba(0,0,0,0.6);
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:15px}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background var(--transition),color var(--transition)}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--anthracite);
+  color: var(--cream);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,5rem);transition:background var(--transition)}
-.nav-logo{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue);text-decoration:none;letter-spacing:.06em;font-weight:500}
-.nav-links{display:flex;gap:2.2rem;list-style:none}
-.nav-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover{color:var(--blue)}
-.nav-right{display:flex;align-items:center;gap:12px}
-.theme-toggle{background:var(--bg3);border:1px solid var(--border2);border-radius:50px;width:48px;height:26px;cursor:pointer;position:relative;transition:all .3s;flex-shrink:0}
-.theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--blue);transition:transform .3s}
-[data-theme="light"] .theme-toggle::after{transform:translateX(22px)}
-.nav-cta{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:8px 18px;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:background .2s,transform .15s}
-.nav-cta:hover{background:var(--blue-light);transform:translateY(-1px)}
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--or);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--or);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.18s ease;
+  opacity: 0.5;
+}
 
-main{padding-top:58px;position:relative}
-section{padding:clamp(4.5rem,9vw,8rem) clamp(1.5rem,5vw,5rem);max-width:1200px;margin:0 auto}
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  mix-blend-mode: normal;
+  padding: 28px clamp(2rem, 6vw, 6rem);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--or);
+  text-decoration: none; letter-spacing: .15em; text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--smoke); text-decoration: none;
+  letter-spacing: .12em; text-transform: uppercase;
+  transition: color .3s;
+}
+.nav-links a:hover { color: var(--or); }
+.nav-cv {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--anthracite); background: var(--or);
+  border: none; border-radius: 2px; padding: 8px 20px;
+  cursor: none; text-decoration: none; letter-spacing: .1em;
+  text-transform: uppercase; transition: background .2s;
+}
+.nav-cv:hover { background: var(--or-light); }
 
-.sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:12px}
-.sec-eyebrow::after{content:'';flex:1;height:1px;background:var(--border);max-width:120px}
-.sec-title{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--text);line-height:1.15;margin-bottom:3rem}
-.sec-title strong{font-weight:600;font-style:italic}
+/* ═══════════════════════════════════════
+   SCENE 1 — HERO (plein écran)
+═══════════════════════════════════════ */
+#scene-hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 clamp(2rem, 6vw, 6rem) clamp(3rem, 6vw, 5rem);
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(160deg, rgba(201,168,76,0.03) 0%, transparent 50%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(201,168,76,0.025) 80px,
+      rgba(201,168,76,0.025) 81px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(201,168,76,0.025) 80px,
+      rgba(201,168,76,0.025) 81px
+    );
+}
+.hero-photo-bg {
+  position: absolute; top: 0; right: 0; width: 45%; height: 100%;
+  z-index: 1; overflow: hidden;
+}
+.hero-photo-bg img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  filter: grayscale(100%) contrast(1.1);
+  opacity: 0.18;
+}
+.hero-photo-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--anthracite) 0%, transparent 40%, var(--anthracite) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+.hero-label {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--or); letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;
+}
+.hero-label::before { content: ''; width: 40px; height: 1px; background: var(--or); opacity: .5; }
+.dot-blink { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--or); animation: blink 1.4s ease-in-out infinite; margin-right: 6px; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.2} }
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 16vw, 15rem);
+  font-weight: 300; line-height: .88;
+  letter-spacing: -.02em;
+  margin-bottom: 2.5rem;
+  color: var(--cream);
+}
+.hero-name .or { color: var(--or); font-style: italic; }
+.hero-bottom {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap;
+}
+.hero-desc {
+  font-size: 13px; color: var(--smoke); line-height: 2;
+  max-width: 480px; font-family: 'Space Mono', monospace;
+}
+.hero-desc strong { color: var(--cream); font-weight: 400; }
+.hero-scroll {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--smoke); letter-spacing: .18em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  animation: float 2.5s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)} }
+.hero-scroll::after { content: '↓'; color: var(--or); font-size: 14px; }
+.hero-line {
+  position: absolute; bottom: 0; left: clamp(2rem,6vw,6rem); right: clamp(2rem,6vw,6rem);
+  height: 1px; background: linear-gradient(to right, var(--or), transparent); opacity: .3; z-index: 2;
+}
 
-/* ── HERO ── */
-#hero{min-height:calc(100vh - 58px);display:grid;grid-template-columns:1fr 400px;gap:80px;align-items:center;padding-top:clamp(2rem,5vw,4rem)}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue);background:var(--blue-dim);border:1px solid var(--blue-glow);border-radius:4px;padding:5px 14px;margin-bottom:2rem;letter-spacing:.05em}
-.pulse{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
-.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.02em;margin-bottom:1.5rem;color:var(--text)}
-.hero-name .ghost{color:transparent;-webkit-text-stroke:1px var(--text3)}
-.hero-role{font-family:'JetBrains Mono',monospace;font-size:clamp(.85rem,1.4vw,.95rem);color:var(--text2);line-height:2;margin-bottom:1.5rem}
-.hero-role .hi{color:var(--blue);font-weight:500}
-.hero-desc{font-size:14px;color:var(--text2);line-height:1.9;max-width:500px;margin-bottom:2.5rem;font-family:'Syne',sans-serif}
-.hero-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:3rem}
-.btn-primary{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:13px 24px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;letter-spacing:.02em}
-.btn-primary:hover{background:var(--blue-light);transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow)}
-.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border2);border-radius:6px;padding:13px 24px;font-family:'Syne',sans-serif;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
-.btn-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+/* ═══════════════════════════════════════
+   SCENE 2 — IDENTITÉ (bande éditoriale)
+═══════════════════════════════════════ */
+#scene-identity {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: clamp(5rem,10vw,9rem) clamp(2rem,6vw,6rem);
+  position: relative; overflow: hidden;
+}
+.identity-number {
+  position: absolute; top: clamp(3rem,6vw,5rem); right: clamp(2rem,6vw,6rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(8rem,18vw,18rem); font-weight: 300;
+  color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.12);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.identity-content {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; width: 100%; align-items: start;
+}
+.identity-left {}
+.scene-kicker {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); letter-spacing: .22em; text-transform: uppercase;
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+}
+.scene-kicker::before { content: ''; width: 30px; height: 1px; background: var(--or); opacity: .6; }
+.identity-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,5vw,4.5rem);
+  font-weight: 300; line-height: 1.1;
+  color: var(--cream); margin-bottom: 2rem;
+}
+.identity-headline em { font-style: italic; color: var(--or); }
+.identity-body {
+  font-size: 13.5px; color: var(--smoke); line-height: 2.1; margin-bottom: 1.2rem;
+}
+.identity-body strong { color: var(--cream); font-weight: 500; }
+.identity-quote {
+  border-left: 2px solid var(--or); padding-left: 20px; margin: 2rem 0;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.3rem; color: var(--cream2); line-height: 1.7;
+}
+.identity-right {}
+.stats-vertical { display: flex; flex-direction: column; gap: 1px; }
+.stat-row {
+  background: var(--anthracite2); border: 1px solid rgba(201,168,76,0.08);
+  padding: 24px 28px; display: flex; align-items: center; gap: 24px;
+  transition: border-color .3s, background .3s;
+}
+.stat-row:hover { border-color: rgba(201,168,76,0.3); background: var(--anthracite3); }
+.stat-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 300; color: var(--or); line-height: 1; flex-shrink: 0; width: 100px;
+}
+.stat-n span { font-size: 1.6rem; }
+.stat-label { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--smoke); letter-spacing: .06em; }
+.stat-sublabel { font-size: 12px; color: var(--cream2); margin-top: 3px; font-weight: 500; }
+.langs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2rem; }
+.lang-pill {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  padding: 6px 14px; border-radius: 1px;
+  border: 1px solid rgba(201,168,76,0.2); color: var(--smoke);
+}
+.lang-pill.main { border-color: var(--or); color: var(--or); background: var(--or-dim); }
 
-/* Stats */
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.hstat{background:var(--bg);padding:18px 16px;text-align:center}
-.hstat .n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--text);line-height:1}
-.hstat .n em{color:var(--blue);font-style:normal;font-size:1.3rem}
-.hstat .l{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:5px;letter-spacing:.07em;text-transform:uppercase}
+/* ═══════════════════════════════════════
+   SCENE 3 — STACK (grille asymétrique)
+═══════════════════════════════════════ */
+#scene-stack {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: clamp(5rem,10vw,9rem) clamp(2rem,6vw,6rem);
+  background: var(--anthracite2); position: relative; overflow: hidden;
+}
+.stack-number {
+  position: absolute; top: clamp(3rem,6vw,5rem); right: clamp(2rem,6vw,6rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(8rem,18vw,18rem); font-weight: 300;
+  color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  line-height: 1; pointer-events: none;
+}
+.stack-inner { width: 100%; }
+.stack-header { margin-bottom: 4rem; }
+.stack-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,5vw,4rem); font-weight: 300; color: var(--cream); line-height: 1.1;
+}
+.stack-title em { font-style: italic; color: var(--or); }
+.stack-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08); }
+.stack-cat { background: var(--anthracite2); padding: 28px 24px; }
+.cat-name {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); letter-spacing: .15em; text-transform: uppercase;
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.cat-items { display: flex; flex-direction: column; gap: 8px; }
+.cat-item {
+  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--smoke);
+  display: flex; align-items: center; gap: 8px; transition: color .2s;
+}
+.cat-item:hover { color: var(--cream); }
+.cat-item::before { content: '·'; color: var(--or); font-size: 16px; line-height: 1; }
+.cat-item.hot { color: var(--cream2); }
+.cat-item.hot::before { content: '▸'; font-size: 9px; }
 
-/* Hero photo */
-.hero-right{position:relative}
-.hero-frame{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5}
-.hero-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:filter .3s}
-[data-theme="light"] .hero-frame img{filter:contrast(1.05) saturate(0.9)}
-[data-theme="dark"] .hero-frame img{filter:grayscale(20%) contrast(1.08)}
-.hero-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,var(--bg) 100%)}
-.frame-label{position:absolute;bottom:16px;left:16px;right:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:6px 12px;backdrop-filter:blur(8px)}
-.frame-corner{position:absolute;width:80px;height:80px;border-color:var(--blue);border-style:solid;opacity:.3}
-.frame-corner.tl{top:-8px;left:-8px;border-width:2px 0 0 2px;border-radius:8px 0 0 0}
-.frame-corner.br{bottom:-8px;right:-8px;border-width:0 2px 2px 0;border-radius:0 0 8px 0}
+/* ═══════════════════════════════════════
+   SCENE 4 — PROJETS (cinématique)
+═══════════════════════════════════════ */
+#scene-projects {
+  padding: clamp(5rem,10vw,9rem) clamp(2rem,6vw,6rem);
+  position: relative;
+}
+.projects-number {
+  position: absolute; top: clamp(3rem,6vw,5rem); right: clamp(2rem,6vw,6rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(8rem,18vw,18rem); font-weight: 300;
+  color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  line-height: 1; pointer-events: none;
+}
+.projects-header { margin-bottom: 4rem; }
+.projects-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,5vw,4rem); font-weight: 300; color: var(--cream); line-height: 1.1;
+}
+.projects-title em { font-style: italic; color: var(--or); }
 
-/* ── STACK ── */
-#stack{border-top:1px solid var(--border)}
-.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.stack-cat{background:var(--bg2);padding:24px 26px}
-.stack-cat-name{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px}
-.pills{display:flex;flex-wrap:wrap;gap:7px}
-.pill{background:var(--tag-bg);border:1px solid var(--border);border-radius:5px;padding:5px 13px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);transition:all .2s;cursor:default}
-.pill:hover,.pill.hot{border-color:rgba(37,99,235,.3);color:var(--blue);background:var(--blue-dim)}
+/* Project featured */
+.proj-featured {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: rgba(201,168,76,0.08); margin-bottom: 1px;
+  border: 1px solid rgba(201,168,76,0.08);
+  border-bottom: none;
+}
+.proj-featured-info {
+  background: var(--anthracite2); padding: 40px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.proj-featured-visual {
+  background: var(--anthracite3); padding: 0; overflow: hidden; position: relative;
+}
+.proj-idx {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  color: var(--or); font-weight: 300; margin-bottom: 4px;
+}
+.proj-type {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--smoke); letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.proj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300;
+  color: var(--cream); line-height: 1.1; margin-bottom: 16px;
+}
+.proj-name em { font-style: italic; color: var(--or); }
+.proj-text { font-size: 13px; color: var(--smoke); line-height: 1.9; flex: 1; }
+.proj-metrics-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.proj-metric {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); background: var(--or-dim); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 1px; padding: 4px 10px; letter-spacing: .04em;
+}
+.proj-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--smoke); border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 1px; padding: 3px 9px;
+}
+.proj-cta {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--or); text-decoration: none; letter-spacing: .12em;
+  text-transform: uppercase; display: flex; align-items: center; gap: 8px;
+  margin-top: auto; transition: gap .2s;
+}
+.proj-cta:hover { gap: 14px; }
+.proj-cta::after { content: '→'; }
 
-/* ── PROJECTS ── */
-#projects{border-top:1px solid var(--border)}
-.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,box-shadow .25s;position:relative;overflow:hidden}
-.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);opacity:0;transition:opacity .25s}
-.proj-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
-.proj-card:hover::before{opacity:1}
-.proj-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.proj-num{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:var(--border2);line-height:1;transition:color .25s}
-.proj-card:hover .proj-num{color:var(--blue-glow)}
-.proj-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.proj-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 10px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
-.b-sec{background:rgba(37,99,235,.1);color:#60a5fa}
-.b-back{background:rgba(16,185,129,.1);color:#34d399}
-.b-tool{background:rgba(245,158,11,.1);color:#fbbf24}
-.b-net{background:rgba(168,85,247,.1);color:#c084fc}
-.b-cloud{background:rgba(6,182,212,.1);color:#22d3ee}
-.proj-title{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:300;color:var(--text);line-height:1.15;font-style:italic}
-.proj-desc{font-size:13px;color:var(--text2);line-height:1.8;flex:1}
-.proj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-.ptag{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);background:var(--tag-bg);border:1px solid var(--border);border-radius:3px;padding:2px 8px}
-.proj-metrics{display:flex;gap:8px;flex-wrap:wrap}
-.pmetric{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);background:var(--blue-dim);border-radius:4px;padding:3px 10px}
-.proj-links{display:flex;gap:8px;margin-top:auto;padding-top:4px}
-.plink{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);border:1px solid var(--border);border-radius:5px;padding:5px 12px;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
-.plink:hover{border-color:var(--blue);color:var(--blue)}
+/* Screenshots inside featured */
+.proj-screenshots {
+  position: absolute; inset: 0;
+}
+.proj-screenshots img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+  opacity: 0; transition: opacity .6s ease;
+}
+.proj-screenshots img.active { opacity: 1; }
+.scr-nav {
+  position: absolute; bottom: 16px; z-index: 3;
+  background: rgba(26,28,30,0.85); border: 1px solid rgba(201,168,76,0.3);
+  color: var(--or); font-size: 11px; padding: 6px 12px;
+  cursor: none; transition: all .2s;
+}
+.scr-nav:hover { background: var(--or); color: var(--anthracite); }
+.scr-prev { left: 16px; }
+.scr-next { left: 68px; }
+.scr-dots {
+  position: absolute; top: 16px; right: 16px; z-index: 3;
+  display: flex; gap: 6px;
+}
+.scr-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(201,168,76,0.3); cursor: none; transition: background .2s;
+}
+.scr-dot.on { background: var(--or); }
 
-/* Screenshots carousel */
-.proj-screenshots{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border)}
-.proj-screenshots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .5s ease}
-.proj-screenshots img.active{opacity:1}
-.scr-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2}
-.scr-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
-.scr-dot.on{background:var(--blue)}
-.scr-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(7,9,15,.75);border:1px solid var(--border2);border-radius:5px;color:var(--text2);font-size:13px;padding:4px 9px;cursor:pointer;z-index:2;transition:all .2s}
-.scr-nav:hover{color:var(--blue);border-color:var(--blue)}
-.scr-prev{left:8px}
-.scr-next{right:8px}
+/* Projects grid secondary */
+.proj-grid-secondary {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.08); border-top: none;
+}
+.proj-mini {
+  background: var(--anthracite); padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background .25s;
+  text-decoration: none; color: inherit;
+}
+.proj-mini:hover { background: var(--anthracite2); }
+.proj-mini-idx {
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+  color: rgba(201,168,76,0.2); font-weight: 300; line-height: 1;
+}
+.proj-mini-type {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  color: var(--or); letter-spacing: .12em; text-transform: uppercase;
+}
+.proj-mini-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+  font-weight: 300; color: var(--cream); line-height: 1.2;
+}
+.proj-mini-desc { font-size: 11.5px; color: var(--smoke); line-height: 1.75; flex: 1; }
+.proj-mini-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.proj-mini-chip {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  color: var(--smoke); border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 1px; padding: 2px 7px;
+}
+.proj-mini-link {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); text-decoration: none; letter-spacing: .1em;
+  text-transform: uppercase; display: flex; align-items: center; gap: 6px;
+  margin-top: auto; transition: gap .2s;
+}
+.proj-mini-link:hover { gap: 10px; }
+.proj-mini-link::after { content: '→'; }
 
-/* ── EXPERIENCE ── */
-#experience{border-top:1px solid var(--border)}
-.xp-timeline{display:flex;flex-direction:column;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.xp-item{background:var(--bg2);padding:28px 32px;display:grid;grid-template-columns:180px 1fr;gap:32px;transition:background .2s}
-.xp-item:hover{background:var(--bg3)}
-.xp-left{}
-.xp-period{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.06em;margin-bottom:6px}
-.xp-company{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);line-height:1.5}
-.xp-loc{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:.04em}
-.xp-right{}
-.xp-role{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px}
-.xp-context{font-size:12.5px;color:var(--blue);font-family:'JetBrains Mono',monospace;margin-bottom:10px;font-style:italic;opacity:.8}
-.xp-missions{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.xp-missions li{font-size:13px;color:var(--text2);line-height:1.7;padding-left:14px;position:relative}
-.xp-missions li::before{content:'▸';position:absolute;left:0;color:var(--blue);font-size:10px;top:3px}
-.xp-stack{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.xp-chip{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);background:var(--tag-bg);border:1px solid var(--border);border-radius:3px;padding:2px 8px}
-.xp-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);background:var(--blue-dim);border-radius:3px;padding:2px 9px;margin-top:8px}
-.xp-section-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;background:var(--bg);border-bottom:1px solid var(--border)}
+/* ═══════════════════════════════════════
+   SCENE 5 — PARCOURS (timeline verticale)
+═══════════════════════════════════════ */
+#scene-experience {
+  padding: clamp(5rem,10vw,9rem) clamp(2rem,6vw,6rem);
+  background: var(--anthracite2); position: relative; overflow: hidden;
+}
+.xp-number {
+  position: absolute; top: clamp(3rem,6vw,5rem); right: clamp(2rem,6vw,6rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(8rem,18vw,18rem); font-weight: 300;
+  color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.06);
+  line-height: 1; pointer-events: none;
+}
+.xp-header { margin-bottom: 4rem; }
+.xp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,5vw,4rem); font-weight: 300; color: var(--cream); line-height: 1.1;
+}
+.xp-title em { font-style: italic; color: var(--or); }
+.xp-section-label {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); letter-spacing: .18em; text-transform: uppercase;
+  margin: 3rem 0 1.5rem; display: flex; align-items: center; gap: 12px;
+}
+.xp-section-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+.xp-list { display: flex; flex-direction: column; }
+.xp-row {
+  display: grid; grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid rgba(201,168,76,0.07);
+  transition: background .2s; padding: 28px 0;
+}
+.xp-row:hover { background: rgba(201,168,76,0.02); }
+.xp-left-col {}
+.xp-period {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); letter-spacing: .06em; margin-bottom: 5px;
+}
+.xp-co {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--smoke); line-height: 1.5;
+}
+.xp-loc { font-size: 10px; color: var(--anthracite3); margin-top: 3px; }
+.xp-right-col {}
+.xp-role {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  font-weight: 400; color: var(--cream); margin-bottom: 8px;
+}
+.xp-context {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: rgba(201,168,76,0.65); margin-bottom: 12px; font-style: italic;
+}
+.xp-missions { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.xp-missions li {
+  font-size: 12.5px; color: var(--smoke); line-height: 1.75;
+  padding-left: 14px; position: relative;
+}
+.xp-missions li::before { content: '▸'; position: absolute; left: 0; color: var(--or); font-size: 8px; top: 5px; }
+.xp-stack-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.xp-tag {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  color: var(--smoke); border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 1px; padding: 2px 8px;
+}
+.xp-badge {
+  display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); background: var(--or-dim); border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 1px; padding: 3px 10px; margin-top: 8px; letter-spacing: .04em;
+}
 
-/* ── ABOUT ── */
-#about{border-top:1px solid var(--border)}
-.about-grid{display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:start}
-.about-text p{font-size:14px;color:var(--text2);line-height:1.95;margin-bottom:1.1rem}
-.about-text strong{color:var(--text);font-weight:600}
-.about-quote{border-left:3px solid var(--blue);padding-left:20px;margin:1.8rem 0;font-family:'Fraunces',serif;font-style:italic;color:var(--text2);font-size:15px;line-height:1.8}
-.about-langs{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.5rem}
-.lang-tag{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border-radius:5px;border:1px solid var(--border);color:var(--text2)}
-.lang-tag.primary{border-color:rgba(37,99,235,.4);color:var(--blue);background:var(--blue-dim)}
-.about-aside{display:flex;flex-direction:column;gap:8px}
-.aside-card{display:flex;align-items:center;gap:13px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:border-color .2s}
-.aside-card:hover{border-color:var(--border2)}
-.aside-icon{width:34px;height:34px;border-radius:8px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:var(--blue)}
-.aside-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
-.aside-val{font-size:12.5px;color:var(--text);font-weight:600;margin-top:2px}
+/* ═══════════════════════════════════════
+   SCENE 6 — CONTACT (plein écran final)
+═══════════════════════════════════════ */
+#scene-contact {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: clamp(5rem,10vw,9rem) clamp(2rem,6vw,6rem);
+  position: relative; overflow: hidden;
+}
+.contact-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+}
+.contact-inner { position: relative; z-index: 1; width: 100%; }
+.contact-kicker {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--or); letter-spacing: .22em; text-transform: uppercase;
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+}
+.contact-kicker::before { content: ''; width: 30px; height: 1px; background: var(--or); opacity: .6; }
+.contact-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem,12vw,11rem); font-weight: 300;
+  line-height: .9; letter-spacing: -.02em;
+  color: var(--cream); margin-bottom: 4rem;
+}
+.contact-headline .ghost { color: transparent; -webkit-text-stroke: 1px rgba(240,235,224,0.15); }
+.contact-headline em { font-style: italic; color: var(--or); }
+.contact-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08);
+  max-width: 900px;
+}
+.c-card {
+  background: var(--anthracite2); padding: 24px;
+  text-decoration: none; color: inherit;
+  transition: background .25s;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.c-card:hover { background: var(--anthracite3); }
+.c-label {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  color: var(--or); letter-spacing: .14em; text-transform: uppercase;
+}
+.c-val { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--cream); }
+.c-arrow { font-size: 16px; color: var(--or); margin-top: auto; }
+.contact-bottom {
+  margin-top: 4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.contact-availability {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--smoke);
+  display: flex; align-items: center; gap: 10px;
+}
+.avail-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 1.4s ease-in-out infinite; flex-shrink: 0; }
+.btn-dl {
+  background: var(--or); color: var(--anthracite);
+  border: none; border-radius: 1px; padding: 14px 32px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  cursor: none; text-decoration: none; letter-spacing: .12em; text-transform: uppercase;
+  transition: background .2s, transform .15s; font-weight: 700;
+}
+.btn-dl:hover { background: var(--or-light); transform: translateY(-2px); }
 
-/* Certifications */
-.certs{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.cert-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text2)}
-.cert-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
-
-/* ── CONTACT ── */
-#contact{border-top:1px solid var(--border)}
-.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.contact-headline{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:300;line-height:.95;margin-bottom:1.2rem}
-.contact-headline strong{font-weight:600;font-style:italic;color:var(--blue)}
-.contact-sub{font-size:13.5px;color:var(--text2);line-height:1.85;margin-bottom:2rem;max-width:400px}
-.contact-cards{display:flex;flex-direction:column;gap:8px}
-.c-card{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text2);font-size:13px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:all .2s}
-.c-card:hover{border-color:var(--blue);color:var(--text);background:var(--bg3);transform:translateX(4px)}
-.c-icon{width:36px;height:36px;border-radius:8px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue);flex-shrink:0;font-weight:600}
-.c-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
-.c-val{font-size:13px;color:var(--text);margin-top:2px;font-weight:600}
-
-/* footer */
-footer{border-top:1px solid var(--border);padding:1.8rem clamp(1.5rem,5vw,5rem);display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
+/* Footer */
+footer {
+  border-top: 1px solid rgba(201,168,76,0.08);
+  padding: 2rem clamp(2rem,6vw,6rem);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Space Mono', monospace; font-size: 9px; color: var(--anthracite3);
+}
 
 /* Reveal */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity .7s ease, transform .7s ease; }
+.reveal-left.vis { opacity: 1; transform: translateX(0); }
 
 /* Responsive */
 @media(max-width:960px){
-  #hero{grid-template-columns:1fr;gap:40px}
-  .hero-right{order:-1;max-width:280px;margin:0 auto}
-  .proj-grid{grid-template-columns:1fr}
-  .proj-card.featured{grid-column:span 1;grid-template-columns:1fr}
-  .xp-item{grid-template-columns:1fr;gap:12px}
-  .about-grid{grid-template-columns:1fr;gap:28px}
-  .contact-wrap{grid-template-columns:1fr;gap:32px}
-  .stack-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+  .hero-photo-bg { width: 100%; opacity: .08; }
+  .identity-content { grid-template-columns: 1fr; gap: 40px; }
+  .stack-cats { grid-template-columns: repeat(2,1fr); }
+  .proj-featured { grid-template-columns: 1fr; }
+  .proj-featured-visual { min-height: 280px; }
+  .proj-grid-secondary { grid-template-columns: repeat(2,1fr); }
+  .xp-row { grid-template-columns: 1fr; gap: 10px; }
+  .contact-grid { grid-template-columns: repeat(2,1fr); }
+  .contact-headline { font-size: clamp(3rem,10vw,6rem); }
+  .nav-links { display: none; }
+}
+@media(max-width:600px){
+  .stack-cats { grid-template-columns: 1fr; }
+  .proj-grid-secondary { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
 <nav>
-  <a class="nav-logo" href="#hero">cyril-tuekam.dev</a>
+  <a class="nav-logo" href="#scene-hero">Cyril Tuekam</a>
   <ul class="nav-links">
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="#projects">Projets</a></li>
-    <li><a href="#experience">Parcours</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#scene-stack">Stack</a></li>
+    <li><a href="#scene-projects">Projets</a></li>
+    <li><a href="#scene-experience">Parcours</a></li>
+    <li><a href="#scene-contact">Contact</a></li>
   </ul>
-  <div class="nav-right">
-    <button class="theme-toggle" id="themeToggle" title="Changer le thème" aria-label="Toggle theme"></button>
-    <a href="cv_Cyril.pdf" class="nav-cta" download>CV ↓</a>
-  </div>
+  <a href="cv_Cyril.pdf" class="nav-cv" download>Télécharger CV</a>
 </nav>
 
-<main>
-
-<!-- ── HERO ── -->
-<section id="hero">
-  <div class="hero-left reveal">
-    <div class="hero-eyebrow"><span class="pulse"></span>Disponible · Alternance septembre 2026</div>
-    <h1 class="hero-name">CYRIL<br><span class="ghost">TUEKAM</span></h1>
-    <p class="hero-role">
-      Ingénieur <span class="hi">DevOps / DevSecOps</span> en formation<br>
-      Terraform · Kubernetes · CI/CD · Docker · AWS
-    </p>
-    <p class="hero-desc">
-      Étudiant Bac+5 à 3iL Ingénieurs, Limoges. Deux ans d'expérience terrain entre Yaoundé et la France. Je construis des infrastructures fiables, des pipelines sécurisés — avec l'ambition de devenir CTO.
-    </p>
-    <div class="hero-ctas">
-      <a href="cv_Cyril.pdf" class="btn-primary" download>↓ Télécharger le CV</a>
-      <a href="https://github.com/Cyrolymp" class="btn-outline" target="_blank" rel="noopener">GitHub ↗</a>
-      <a href="https://linkedin.com/in/cyril-tuekam-8a5584205" class="btn-outline" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="n">2<em>ans</em></div><div class="l">Expérience</div></div>
-      <div class="hstat"><div class="n">+20<em>%</em></div><div class="l">Efficacité Findme</div></div>
-      <div class="hstat"><div class="n">5</div><div class="l">Projets</div></div>
-      <div class="hstat"><div class="n">3</div><div class="l">Langues</div></div>
+<!-- ═══ SCENE 1 : HERO ═══ -->
+<section id="scene-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-photo-bg">
+    <img src="images/professionnel.png" alt="">
+  </div>
+  <div class="hero-content reveal">
+    <div class="hero-label"><span class="dot-blink"></span>Disponible · Alternance septembre 2026</div>
+    <h1 class="hero-name">CYRIL<br><span class="or">TUEKAM</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        Ingénieur <strong>DevOps / DevSecOps</strong> en formation · Bac+5<br>
+        Terraform · Kubernetes · CI/CD · Docker · AWS<br>
+        <strong>Objectif long terme : CTO</strong>
+      </p>
+      <div class="hero-scroll">Défiler</div>
     </div>
   </div>
-  <div class="hero-right reveal">
-    <div class="frame-corner tl"></div>
-    <div class="frame-corner br"></div>
-    <div class="hero-frame">
-      <img src="images/professionnel.png" alt="Cyril Tuekam">
-      <div class="frame-label">~/cyril · Limoges, France · Bac+5 DevOps</div>
-    </div>
-  </div>
+  <div class="hero-line"></div>
 </section>
 
-<!-- ── STACK ── -->
-<section id="stack">
-  <div class="sec-eyebrow">Stack technique</div>
-  <h2 class="sec-title">Les outils avec lesquels<br>je <strong>construis et sécurise</strong></h2>
-  <div class="stack-grid reveal">
-    <div class="stack-cat">
-      <div class="stack-cat-name">☁ Cloud & Infrastructure as Code</div>
-      <div class="pills">
-        <span class="pill hot">AWS</span>
-        <span class="pill hot">GCP</span>
-        <span class="pill hot">Terraform</span>
-        <span class="pill">VMware</span>
-        <span class="pill">Hyper-V</span>
-        <span class="pill">Control M</span>
-        <span class="pill">Linux</span>
-        <span class="pill">Windows Server</span>
-        <span class="pill">Méthode Agile</span>
+<!-- ═══ SCENE 2 : IDENTITÉ ═══ -->
+<section id="scene-identity">
+  <div class="identity-number">02</div>
+  <div class="identity-content">
+    <div class="identity-left reveal-left">
+      <div class="scene-kicker">Qui je suis</div>
+      <h2 class="identity-headline">Un ingénieur qui croit que la<br><em>sécurité commence</em><br>à la conception</h2>
+      <p class="identity-body">
+        Né au Cameroun, formé deux ans en <strong>CPGE MPSI</strong> à Yaoundé, je poursuis aujourd'hui un cycle ingénieur DevOps à <strong>3iL Ingénieurs</strong> à Limoges. Mon parcours mêle rigueur des prépas, expérience terrain en startup et engagement bénévole.
+      </p>
+      <blockquote class="identity-quote">
+        "Cette alternance est un pivot stratégique de mon parcours vers des responsabilités techniques et stratégiques."
+      </blockquote>
+      <p class="identity-body">
+        Je cherche une alternance <strong>DevOps/DevSecOps</strong> de 24 à 36 mois dès septembre 2026. Paris · Lyon · Marseille · Montpellier · Limoges. Permis B, véhicule, mobilité garantie.
+      </p>
+      <div class="langs">
+        <span class="lang-pill main">Français — natif</span>
+        <span class="lang-pill">Anglais — B2</span>
+        <span class="lang-pill">Allemand — B1</span>
       </div>
     </div>
-    <div class="stack-cat">
-      <div class="stack-cat-name">⚙ CI/CD & Containers</div>
-      <div class="pills">
-        <span class="pill hot">Docker</span>
-        <span class="pill hot">Kubernetes</span>
-        <span class="pill hot">GitHub Actions</span>
-        <span class="pill hot">Jenkins</span>
-        <span class="pill">Artifactory</span>
-        <span class="pill">GitFlow</span>
-        <span class="pill">Bitbucket</span>
-        <span class="pill">OpenShift</span>
-      </div>
-    </div>
-    <div class="stack-cat">
-      <div class="stack-cat-name">🔐 DevSecOps & Monitoring</div>
-      <div class="pills">
-        <span class="pill hot">Trivy</span>
-        <span class="pill hot">Grafana</span>
-        <span class="pill hot">Prometheus</span>
-        <span class="pill">Wireshark</span>
-        <span class="pill">Packet Tracer</span>
-        <span class="pill">Google Analytics</span>
-        <span class="pill">Vault</span>
-      </div>
-    </div>
-    <div class="stack-cat">
-      <div class="stack-cat-name">💻 Développement & Scripting</div>
-      <div class="pills">
-        <span class="pill hot">Python</span>
-        <span class="pill hot">FastAPI</span>
-        <span class="pill">Django</span>
-        <span class="pill hot">Java</span>
-        <span class="pill">JavaScript</span>
-        <span class="pill">Bash / Shell</span>
-        <span class="pill">SQL / PostgreSQL</span>
-        <span class="pill">C</span>
+    <div class="identity-right reveal">
+      <div class="stats-vertical">
+        <div class="stat-row">
+          <div class="stat-n">2<span>ans</span></div>
+          <div><div class="stat-label">Expérience terrain</div><div class="stat-sublabel">Findme · BeWeb · Freelance</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-n">+20<span>%</span></div>
+          <div><div class="stat-label">Gain d'efficacité</div><div class="stat-sublabel">Chez Findme · 2025</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-n">5</div>
+          <div><div class="stat-label">Projets réalisés</div><div class="stat-sublabel">DevOps · DevSecOps · Sécurité</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-n">3</div>
+          <div><div class="stat-label">Langues</div><div class="stat-sublabel">FR · EN · DE</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-n">-30<span>%</span></div>
+          <div><div class="stat-label">Temps de publication</div><div class="stat-sublabel">Chez BeWeb · 2024</div></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── PROJECTS ── -->
-<section id="projects">
-  <div class="sec-eyebrow">Projets phares</div>
-  <h2 class="sec-title">Ce que j'ai <strong>conçu & déployé</strong></h2>
-  <div class="proj-grid reveal">
+<!-- ═══ SCENE 3 : STACK ═══ -->
+<section id="scene-stack">
+  <div class="stack-number">03</div>
+  <div class="stack-inner reveal">
+    <div class="stack-header">
+      <div class="scene-kicker">Stack technique</div>
+      <h2 class="stack-title">Les outils avec lesquels<br>je <em>construis et sécurise</em></h2>
+    </div>
+    <div class="stack-cats">
+      <div class="stack-cat">
+        <div class="cat-name">☁ Cloud & IaC</div>
+        <div class="cat-items">
+          <span class="cat-item hot">AWS</span>
+          <span class="cat-item hot">GCP</span>
+          <span class="cat-item hot">Terraform</span>
+          <span class="cat-item">VMware · Hyper-V</span>
+          <span class="cat-item">Linux · Windows Server</span>
+          <span class="cat-item">Control M</span>
+          <span class="cat-item">Azure (en cours)</span>
+          <span class="cat-item">Méthode Agile</span>
+        </div>
+      </div>
+      <div class="stack-cat">
+        <div class="cat-name">⚙ CI/CD & Containers</div>
+        <div class="cat-items">
+          <span class="cat-item hot">Docker</span>
+          <span class="cat-item hot">Kubernetes</span>
+          <span class="cat-item hot">GitHub Actions</span>
+          <span class="cat-item hot">Jenkins</span>
+          <span class="cat-item">Artifactory</span>
+          <span class="cat-item">GitFlow</span>
+          <span class="cat-item">Bitbucket</span>
+          <span class="cat-item">OpenShift</span>
+        </div>
+      </div>
+      <div class="stack-cat">
+        <div class="cat-name">🔐 DevSecOps</div>
+        <div class="cat-items">
+          <span class="cat-item hot">Trivy</span>
+          <span class="cat-item hot">Grafana</span>
+          <span class="cat-item hot">Prometheus</span>
+          <span class="cat-item">Wireshark</span>
+          <span class="cat-item">Packet Tracer</span>
+          <span class="cat-item">Vault</span>
+          <span class="cat-item">Google Analytics</span>
+        </div>
+      </div>
+      <div class="stack-cat">
+        <div class="cat-name">💻 Dev & Scripting</div>
+        <div class="cat-items">
+          <span class="cat-item hot">Python · FastAPI</span>
+          <span class="cat-item">Django</span>
+          <span class="cat-item hot">Java · Spring Boot</span>
+          <span class="cat-item">JavaScript</span>
+          <span class="cat-item">Bash · Shell</span>
+          <span class="cat-item">SQL · PostgreSQL</span>
+          <span class="cat-item">C</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Featured: HackHub -->
-    <div class="proj-card featured">
+<!-- ═══ SCENE 4 : PROJETS ═══ -->
+<section id="scene-projects">
+  <div class="projects-number">04</div>
+  <div class="projects-header reveal">
+    <div class="scene-kicker">Projets phares</div>
+    <h2 class="projects-title">Ce que j'ai <em>conçu & déployé</em></h2>
+  </div>
+
+  <!-- Featured: HackHub -->
+  <div class="proj-featured reveal">
+    <div class="proj-featured-info">
       <div>
-        <div class="proj-header">
-          <div class="proj-num">01</div>
-          <span class="proj-badge b-back">Backend · Équipe</span>
-        </div>
-        <div class="proj-title">HackHub</div>
-        <p class="proj-desc">Plateforme complète de gestion de hackathons développée en équipe de 4 en 3 semaines. Tableau de bord, classements en temps réel, gestion des équipes, épreuves et récompenses. Backend Java/Spring Boot avec APIs REST, pipeline CI/CD GitHub Actions avec scan de sécurité Trivy.</p>
-        <div class="proj-metrics">
-          <span class="pmetric">Équipe · 4 personnes</span>
-          <span class="pmetric">3 semaines</span>
-          <span class="pmetric">CI/CD ✅</span>
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Java</span><span class="ptag">Spring Boot</span><span class="ptag">REST API</span><span class="ptag">PostgreSQL</span><span class="ptag">GitHub Actions</span><span class="ptag">Trivy</span><span class="ptag">GitFlow</span>
-        </div>
-        <div class="proj-links">
-          <a class="plink" href="https://github.com/Cyrolymp/hackhub-hackathon" target="_blank">GitHub ↗</a>
-        </div>
+        <div class="proj-idx">01 —</div>
+        <div class="proj-type">Backend · Équipe de 4 · 3 semaines</div>
       </div>
-      <div>
-        <div class="proj-screenshots" id="hh-scr">
-          <img src="images/Screenshot 2026-05-27 085049.png" alt="HackHub Accueil" class="active">
-          <img src="images/Screenshot 2026-05-27 085115.png" alt="HackHub Dashboard">
-          <img src="images/Screenshot 2026-05-27 085231.png" alt="HackHub Épreuves">
-          <button class="scr-nav scr-prev" onclick="hhNav(-1,event)">&#8592;</button>
-          <button class="scr-nav scr-next" onclick="hhNav(1,event)">&#8594;</button>
-          <div class="scr-dots">
-            <div class="scr-dot on" onclick="hhGo(0,event)"></div>
-            <div class="scr-dot" onclick="hhGo(1,event)"></div>
-            <div class="scr-dot" onclick="hhGo(2,event)"></div>
-          </div>
+      <h3 class="proj-name"><em>HackHub</em></h3>
+      <p class="proj-text">Plateforme complète de gestion de hackathons : tableau de bord, classements en temps réel, gestion des équipes, épreuves et récompenses. Backend Java/Spring Boot, APIs REST, pipeline CI/CD GitHub Actions avec scan Trivy intégré.</p>
+      <div class="proj-metrics-row">
+        <span class="proj-metric">Pipeline CI/CD ✅</span>
+        <span class="proj-metric">Scan Trivy ✅</span>
+        <span class="proj-metric">4 membres</span>
+      </div>
+      <div class="proj-chips">
+        <span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">REST API</span><span class="chip">PostgreSQL</span><span class="chip">GitHub Actions</span><span class="chip">Trivy</span><span class="chip">GitFlow</span>
+      </div>
+      <a class="proj-cta" href="https://github.com/Cyrolymp/hackhub-hackathon" target="_blank">Voir sur GitHub</a>
+    </div>
+    <div class="proj-featured-visual">
+      <div class="proj-screenshots" id="hh-scr">
+        <img src="images/Screenshot 2026-05-27 085049.png" alt="HackHub Accueil" class="active">
+        <img src="images/Screenshot 2026-05-27 085115.png" alt="HackHub Dashboard">
+        <img src="images/Screenshot 2026-05-27 085231.png" alt="HackHub Épreuves">
+        <button class="scr-nav scr-prev" onclick="hhNav(-1,event)">&#8592;</button>
+        <button class="scr-nav scr-next" onclick="hhNav(1,event)">&#8594;</button>
+        <div class="scr-dots">
+          <div class="scr-dot on" onclick="hhGo(0,event)"></div>
+          <div class="scr-dot" onclick="hhGo(1,event)"></div>
+          <div class="scr-dot" onclick="hhGo(2,event)"></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- HomeCloud -->
-    <div class="proj-card">
-      <div class="proj-header">
-        <div class="proj-num">02</div>
-        <span class="proj-badge b-cloud">Infrastructure · Solo</span>
+  <!-- Grid secondaire -->
+  <div class="proj-grid-secondary reveal">
+    <div class="proj-mini">
+      <div class="proj-mini-idx">02</div>
+      <div class="proj-mini-type">Infrastructure · Solo · En cours</div>
+      <div class="proj-mini-name">HomeCloud</div>
+      <p class="proj-mini-desc">Infrastructure cloud personnelle from scratch : Terraform, Kubernetes (K3s), GitHub Actions, Vault, Grafana/Prometheus. Standards de production.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">Terraform</span><span class="proj-mini-chip">K3s</span><span class="proj-mini-chip">Vault</span><span class="proj-mini-chip">Grafana</span>
       </div>
-      <div class="proj-title">HomeCloud</div>
-      <p class="proj-desc">Infrastructure cloud personnelle complète from scratch. Provisionnement Terraform, orchestration Kubernetes (K3s), pipeline GitHub Actions sécurisé, gestion des secrets avec Vault, monitoring Grafana/Prometheus. Standards de production.</p>
-      <div class="proj-metrics">
-        <span class="pmetric">Solo</span>
-        <span class="pmetric">En cours</span>
-      </div>
-      <div class="proj-tags">
-        <span class="ptag">Terraform</span><span class="ptag">K3s</span><span class="ptag">GitHub Actions</span><span class="ptag">Docker</span><span class="ptag">Vault</span><span class="ptag">Grafana</span><span class="ptag">Prometheus</span>
-      </div>
-      <div class="proj-links">
-        <a class="plink" href="https://github.com/Cyrolymp" target="_blank">GitHub ↗</a>
+      <span class="proj-mini-link">GitHub</span>
+    </div>
+    <div class="proj-mini">
+      <div class="proj-mini-idx">03</div>
+      <div class="proj-mini-type">DevSecOps · Solo · En cours</div>
+      <div class="proj-mini-name">Plateforme de déploiement sécurisée</div>
+      <p class="proj-mini-desc">Infrastructure Terraform/Kubernetes, pipeline CI/CD sécurisé (GitHub Actions), scan Trivy, gestion des secrets et conformité DevSecOps.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">Terraform</span><span class="proj-mini-chip">Kubernetes</span><span class="proj-mini-chip">Trivy</span><span class="proj-mini-chip">Docker</span>
       </div>
     </div>
-
-    <!-- Plateforme DevSecOps -->
-    <div class="proj-card">
-      <div class="proj-header">
-        <div class="proj-num">03</div>
-        <span class="proj-badge b-sec">DevSecOps · Solo</span>
+    <a class="proj-mini" href="https://github.com/Cyrolymp/Password_Analyzer" target="_blank">
+      <div class="proj-mini-idx">04</div>
+      <div class="proj-mini-type">Outil · Sécurité · Java</div>
+      <div class="proj-mini-name">Password Analyzer</div>
+      <p class="proj-mini-desc">Lecture masquée via Console.readPassword(), effacement immédiat du char[] en mémoire. Réflexe DevSecOps dès la conception.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">Java</span><span class="proj-mini-chip">Sécurité</span><span class="proj-mini-chip">CLI</span>
       </div>
-      <div class="proj-title">Plateforme de déploiement sécurisée</div>
-      <p class="proj-desc">Infrastructure cloud automatisée via Terraform, déploiement conteneurisé sur Kubernetes, pipeline CI/CD GitHub Actions sécurisé. Scan de vulnérabilités Docker (Trivy), gestion des secrets et conformité DevSecOps.</p>
-      <div class="proj-metrics">
-        <span class="pmetric">Solo</span>
-        <span class="pmetric">En cours · Juin 2026</span>
-      </div>
-      <div class="proj-tags">
-        <span class="ptag">Terraform</span><span class="ptag">Kubernetes</span><span class="ptag">Trivy</span><span class="ptag">Docker</span><span class="ptag">GitHub Actions</span>
-      </div>
-    </div>
-
-    <!-- Password Analyzer -->
-    <div class="proj-card">
-      <div class="proj-header">
-        <div class="proj-num">04</div>
-        <span class="proj-badge b-tool">Outil · Sécurité</span>
-      </div>
-      <div class="proj-title">Password Analyzer</div>
-      <p class="proj-desc">Analyseur de mots de passe en Java intégrant les bonnes pratiques de sécurité : lecture masquée via Console.readPassword(), effacement immédiat du char[] en mémoire. Un réflexe DevSecOps dès la conception.</p>
-      <div class="proj-tags">
-        <span class="ptag">Java</span><span class="ptag">Sécurité</span><span class="ptag">CLI</span><span class="ptag">DevSecOps</span>
-      </div>
-      <div class="proj-links">
-        <a class="plink" href="https://github.com/Cyrolymp/Password_Analyzer" target="_blank">GitHub ↗</a>
+      <span class="proj-mini-link">GitHub</span>
+    </a>
+    <div class="proj-mini">
+      <div class="proj-mini-idx">05</div>
+      <div class="proj-mini-type">Réseau · Analyse</div>
+      <div class="proj-mini-name">Analyseur réseau & protocoles</div>
+      <p class="proj-mini-desc">Analyse TCP, DNS, ARP, UDP via Wireshark et Cisco Packet Tracer. Cartographie des flux et renforcement de la sécurité réseau.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">Wireshark</span><span class="proj-mini-chip">TCP/IP</span><span class="proj-mini-chip">DNS</span>
       </div>
     </div>
-
-    <!-- Analyseur réseau -->
-    <div class="proj-card">
-      <div class="proj-header">
-        <div class="proj-num">05</div>
-        <span class="proj-badge b-net">Réseau · Analyse</span>
-      </div>
-      <div class="proj-title">Analyseur réseau & protocoles</div>
-      <p class="proj-desc">Surveillance et analyse des protocoles réseau (TCP, DNS, ARP, UDP) via Wireshark et Cisco Packet Tracer. Cartographie des flux, détection d'anomalies et renforcement de la sécurité réseau.</p>
-      <div class="proj-tags">
-        <span class="ptag">Wireshark</span><span class="ptag">Packet Tracer</span><span class="ptag">TCP/IP</span><span class="ptag">DNS</span><span class="ptag">ARP</span><span class="ptag">UDP</span>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ── EXPERIENCE ── -->
-<section id="experience">
-  <div class="sec-eyebrow">Parcours professionnel</div>
-  <h2 class="sec-title">Expériences qui ont <strong>forgé mon profil</strong></h2>
+<!-- ═══ SCENE 5 : PARCOURS ═══ -->
+<section id="scene-experience">
+  <div class="xp-number">05</div>
+  <div class="xp-header reveal">
+    <div class="scene-kicker">Parcours</div>
+    <h2 class="xp-title">Expériences qui ont<br><em>forgé mon profil</em></h2>
+  </div>
 
-  <div class="xp-timeline reveal">
+  <div class="xp-section-label">Expériences professionnelles</div>
+  <div class="xp-list reveal">
 
-    <div class="xp-section-title">Expériences professionnelles</div>
-
-    <!-- Findme -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">06/2025 – 08/2025</div>
-        <div class="xp-company">Findme</div>
+        <div class="xp-co">Findme</div>
         <div class="xp-loc">Yaoundé · France</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Ingénieur DevOps</div>
-        <div class="xp-context">Développement et déploiement d'applications web en démarche DevOps : automatisation et industrialisation du cycle de vie logiciel.</div>
+        <div class="xp-context">Développement et déploiement d'applications web en démarche DevOps.</div>
         <ul class="xp-missions">
-          <li>Conception et intégration front-end avec Figma et Tailwind CSS, améliorant l'efficacité de 20 %</li>
-          <li>Développement d'APIs sécurisées avec FastAPI et gestion de base de données PostgreSQL</li>
-          <li>Automatisation de la génération de PDF avec WeasyPrint, intégrée directement au pipeline CI/CD</li>
-          <li>Versionning avec Git et déploiement dans un environnement structuré</li>
+          <li>Conception et intégration front-end avec Figma et Tailwind CSS — gain d'efficacité de 20 %</li>
+          <li>Développement d'APIs sécurisées avec FastAPI et gestion de BDD PostgreSQL</li>
+          <li>Automatisation de la génération de PDF avec WeasyPrint, intégrée au pipeline CI/CD</li>
+          <li>Versionning Git et déploiement dans un environnement structuré</li>
         </ul>
-        <div class="xp-stack">
-          <span class="xp-chip">Python</span><span class="xp-chip">Django</span><span class="xp-chip">FastAPI</span><span class="xp-chip">PostgreSQL</span><span class="xp-chip">WeasyPrint</span><span class="xp-chip">Git</span><span class="xp-chip">CI/CD</span><span class="xp-chip">Figma</span><span class="xp-chip">Tailwind CSS</span>
+        <div class="xp-stack-row">
+          <span class="xp-tag">Python</span><span class="xp-tag">Django</span><span class="xp-tag">FastAPI</span><span class="xp-tag">PostgreSQL</span><span class="xp-tag">WeasyPrint</span><span class="xp-tag">CI/CD</span><span class="xp-tag">Figma</span>
         </div>
         <span class="xp-badge">+20 % d'efficacité</span>
       </div>
     </div>
 
-    <!-- Freelance -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">Depuis 01/2026</div>
-        <div class="xp-company">Indépendant</div>
+        <div class="xp-co">Indépendant</div>
         <div class="xp-loc">Limoges · France</div>
       </div>
-      <div class="xp-right">
-        <div class="xp-role">Développeur Informatique Freelance</div>
-        <div class="xp-context">Conception et livraison de solutions web pour des clients variés, en autonomie complète, avec une approche DevOps intégrée dès la conception.</div>
+      <div class="xp-right-col">
+        <div class="xp-role">Développeur Freelance</div>
+        <div class="xp-context">Conception et livraison de solutions web, approche DevOps intégrée dès la conception.</div>
         <ul class="xp-missions">
-          <li>Développement d'applications web sur mesure, de la collecte du besoin à la livraison finale</li>
-          <li>Versionning Git, automatisation des déploiements et application des bonnes pratiques CI/CD</li>
-          <li>Sécurisation des APIs et des environnements livrés, conformément aux standards DevSecOps</li>
-          <li>Gestion complète du cycle projet : analyse, développement, tests, déploiement, documentation</li>
+          <li>Développement d'applications sur mesure, de l'analyse au déploiement</li>
+          <li>Automatisation CI/CD et sécurisation des APIs livrées</li>
+          <li>Gestion autonome du cycle projet complet</li>
         </ul>
-        <div class="xp-stack">
-          <span class="xp-chip">Python</span><span class="xp-chip">Git</span><span class="xp-chip">CI/CD</span><span class="xp-chip">Docker</span><span class="xp-chip">SQL</span><span class="xp-chip">Bash</span>
+        <div class="xp-stack-row">
+          <span class="xp-tag">Python</span><span class="xp-tag">Git</span><span class="xp-tag">CI/CD</span><span class="xp-tag">Docker</span><span class="xp-tag">SQL</span>
         </div>
       </div>
     </div>
 
-    <!-- Là pour toi -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">Depuis 11/2024</div>
-        <div class="xp-company">Là pour toi !</div>
+        <div class="xp-co">Là pour toi !</div>
         <div class="xp-loc">Remote · France</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Assistant Développeur</div>
-        <div class="xp-context">Aide à la mise en place et au maintien d'une plateforme web améliorant la visibilité de l'association.</div>
+        <div class="xp-context">Maintien et amélioration de la plateforme web de l'association.</div>
         <ul class="xp-missions">
-          <li>Mise en place et maintien d'une plateforme web améliorant la visibilité de l'association</li>
-          <li>Standardisation des processus de gestion de contenu et formation des bénévoles aux bonnes pratiques numériques</li>
-          <li>Fourniture d'un appui technique accessible à des profils non techniques</li>
+          <li>Mise en place et maintien d'une plateforme web associative</li>
+          <li>Formation des bénévoles aux bonnes pratiques numériques</li>
         </ul>
       </div>
     </div>
 
-    <!-- BeWeb -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">06/2024 – 08/2024</div>
-        <div class="xp-company">BeWeb SARL</div>
+        <div class="xp-co">BeWeb SARL</div>
         <div class="xp-loc">Yaoundé · Cameroun</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Développeur Informatique</div>
-        <div class="xp-context">Développement, optimisation et maintenance d'infrastructures web sous WordPress dans une optique d'amélioration continue et de performance.</div>
+        <div class="xp-context">Développement et maintenance d'infrastructures WordPress.</div>
         <ul class="xp-missions">
-          <li>Développement et personnalisation de sites WordPress dynamiques, réduisant de 30 % le temps de publication</li>
-          <li>Optimisation SEO et analyse de données avec Google Analytics pour améliorer la visibilité</li>
-          <li>Administration Linux et utilisation d'outils de monitoring pour l'optimisation des infrastructures</li>
+          <li>Personnalisation de sites WordPress dynamiques, réduisant de 30 % le temps de publication</li>
+          <li>Optimisation SEO et analyse de données avec Google Analytics</li>
+          <li>Administration Linux et monitoring pour l'optimisation des infrastructures</li>
         </ul>
-        <div class="xp-stack">
-          <span class="xp-chip">WordPress</span><span class="xp-chip">Google Analytics</span><span class="xp-chip">SEO</span><span class="xp-chip">Linux</span><span class="xp-chip">Bash</span><span class="xp-chip">CI/CD</span>
+        <div class="xp-stack-row">
+          <span class="xp-tag">WordPress</span><span class="xp-tag">Google Analytics</span><span class="xp-tag">Linux</span><span class="xp-tag">Bash</span><span class="xp-tag">CI/CD</span>
         </div>
         <span class="xp-badge">-30 % temps de publication</span>
       </div>
     </div>
 
-    <!-- Intervenant -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">Depuis 10/2025</div>
-        <div class="xp-company">Complétude</div>
+        <div class="xp-co">Complétude</div>
         <div class="xp-loc">Limoges · France</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Intervenant Pédagogique</div>
-        <div class="xp-context">Accompagnement scolaire personnalisé en mathématiques et physique-chimie, 2nde à Terminale.</div>
+        <div class="xp-context">Accompagnement scolaire en mathématiques et physique-chimie, 2nde à Terminale.</div>
         <ul class="xp-missions">
-          <li>Adaptation de la méthode pédagogique à chaque profil d'élève : rythme, sensibilité, objectifs</li>
-          <li>Utilisation d'analogies et d'exemples concrets pour rendre les notions abstraites accessibles</li>
-          <li>Suivi régulier des progrès et ajustement continu de l'approche</li>
+          <li>Adaptation de la méthode à chaque profil d'élève</li>
+          <li>Vulgarisation de concepts complexes — compétence clé pour un ingénieur DevSecOps</li>
         </ul>
       </div>
     </div>
+  </div>
 
-    <div class="xp-section-title">Formation</div>
-
-    <!-- 3iL -->
-    <div class="xp-item">
-      <div class="xp-left">
+  <div class="xp-section-label">Formation</div>
+  <div class="xp-list reveal">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">09/2025 – 09/2028</div>
-        <div class="xp-company">3iL Ingénieurs</div>
+        <div class="xp-co">3iL Ingénieurs</div>
         <div class="xp-loc">Limoges · France</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Diplôme d'Ingénieur DevOps · Bac+5</div>
         <ul class="xp-missions">
           <li>Sécurité des pipelines CI/CD, infrastructures cloud et automatisation</li>
-          <li>Projets pratiques : sécurisation d'applications et analyse de protocoles réseau</li>
           <li>Ambassadeur de l'école</li>
         </ul>
       </div>
     </div>
-
-    <!-- PrépaVogt -->
-    <div class="xp-item">
-      <div class="xp-left">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">09/2023 – 06/2025</div>
-        <div class="xp-company">Institut Prépavogt</div>
+        <div class="xp-co">Institut Prépavogt</div>
         <div class="xp-loc">Yaoundé · Cameroun</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Classes Préparatoires MPSI</div>
         <ul class="xp-missions">
-          <li>Formation scientifique intensive en mathématiques, physique et informatique</li>
+          <li>Formation scientifique intensive en mathématiques, physique, informatique</li>
           <li>Vice-président du club Informatique (2023-2025)</li>
         </ul>
       </div>
     </div>
+  </div>
 
-    <div class="xp-section-title">Bénévolat</div>
-
-    <!-- Bénévole -->
-    <div class="xp-item">
-      <div class="xp-left">
+  <div class="xp-section-label">Bénévolat</div>
+  <div class="xp-list reveal">
+    <div class="xp-row">
+      <div class="xp-left-col">
         <div class="xp-period">Depuis 11/2024</div>
-        <div class="xp-company">Là Pour Toi !</div>
+        <div class="xp-co">Là Pour Toi !</div>
         <div class="xp-loc">Remote · International</div>
       </div>
-      <div class="xp-right">
+      <div class="xp-right-col">
         <div class="xp-role">Bénévole</div>
-        <div class="xp-context">Engagement au sein d'une association dédiée à l'accompagnement des victimes de violences sexuelles et sexistes.</div>
         <ul class="xp-missions">
-          <li>Sensibilisation et accompagnement des victimes dans leurs démarches</li>
-          <li>Participation à l'organisation des activités et événements de l'association</li>
+          <li>Sensibilisation et accompagnement des victimes de violences sexuelles et sexistes</li>
+          <li>Participation à l'organisation des activités de l'association</li>
         </ul>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ── ABOUT ── -->
-<section id="about">
-  <div class="sec-eyebrow">À propos</div>
-  <h2 class="sec-title">Qui je <strong>suis vraiment</strong></h2>
-  <div class="about-grid reveal">
-    <div class="about-text">
-      <p>Je m'appelle <strong>Cyril Olympio Tuekam</strong>. Né au Cameroun, formé deux ans en classes préparatoires MPSI à Yaoundé, je poursuis aujourd'hui un cycle ingénieur DevOps à <strong>3iL Ingénieurs</strong> à Limoges, avec l'ambition claire de devenir <strong>CTO</strong>.</p>
-      <p>Mon parcours mêle rigueur des prépas, expérience terrain en startup (Findme, BeWeb), développement freelance et engagement bénévole avec l'association <strong>Là pour toi!</strong>. J'ai appris à livrer vite, à travailler en autonomie, et à ne pas avoir peur des stacks inconnues.</p>
-      <p>Je crois fermement que la sécurité n'est pas une couche qu'on ajoute à la fin. C'est le fondement de tout système bien conçu — et c'est cette conviction qui guide mon orientation vers le <strong>DevSecOps</strong>.</p>
-      <blockquote class="about-quote">
-        "Cette alternance est bien plus qu'une continuité d'études. C'est un pivot stratégique essentiel de mon parcours vers des responsabilités techniques et stratégiques."
-      </blockquote>
-      <div class="about-langs">
-        <span class="lang-tag primary">Français — natif</span>
-        <span class="lang-tag">Anglais — B2</span>
-        <span class="lang-tag">Allemand — B1</span>
+<!-- ═══ SCENE 6 : CONTACT ═══ -->
+<section id="scene-contact">
+  <div class="contact-bg"></div>
+  <div class="contact-inner reveal">
+    <div class="contact-kicker">Travaillons ensemble</div>
+    <h2 class="contact-headline">
+      <span class="ghost">DISCUTONS</span><br>
+      <em>ensemble</em>
+    </h2>
+    <div class="contact-grid">
+      <a class="c-card" href="mailto:tuekamcyril@gmail.com">
+        <div class="c-label">Email</div>
+        <div class="c-val">tuekamcyril@gmail.com</div>
+        <div class="c-arrow">↗</div>
+      </a>
+      <a class="c-card" href="tel:+33760254779">
+        <div class="c-label">Téléphone</div>
+        <div class="c-val">07 60 25 47 79</div>
+        <div class="c-arrow">↗</div>
+      </a>
+      <a class="c-card" href="https://linkedin.com/in/cyril-tuekam-8a5584205" target="_blank" rel="noopener">
+        <div class="c-label">LinkedIn</div>
+        <div class="c-val">cyril-tuekam</div>
+        <div class="c-arrow">↗</div>
+      </a>
+      <a class="c-card" href="https://github.com/Cyrolymp" target="_blank" rel="noopener">
+        <div class="c-label">GitHub</div>
+        <div class="c-val">Cyrolymp</div>
+        <div class="c-arrow">↗</div>
+      </a>
+    </div>
+    <div class="contact-bottom">
+      <div class="contact-availability">
+        <span class="avail-dot"></span>
+        Disponible pour alternance · Septembre 2026 · Paris · Lyon · Marseille · Montpellier · Limoges
       </div>
-      <div class="certs">
-        <div class="cert-item"><span class="cert-dot"></span>Introduction to Cybersecurity · Cisco NetAcad</div>
-        <div class="cert-item"><span class="cert-dot"></span>Python Essentials 1 · Cisco NetAcad</div>
-        <div class="cert-item"><span class="cert-dot"></span>Formation Azure · En cours</div>
-      </div>
-    </div>
-    <div class="about-aside">
-      <div class="aside-card"><div class="aside-icon">📍</div><div><div class="aside-label">Localisation</div><div class="aside-val">Limoges · Permis B + véhicule</div></div></div>
-      <div class="aside-card"><div class="aside-icon">🎓</div><div><div class="aside-label">Formation</div><div class="aside-val">Bac+5 DevOps · 3iL Ingénieurs</div></div></div>
-      <div class="aside-card"><div class="aside-icon">💼</div><div><div class="aside-label">Recherche</div><div class="aside-val">Alternance DevOps/DevSecOps · Sept. 2026</div></div></div>
-      <div class="aside-card"><div class="aside-icon">⏱</div><div><div class="aside-label">Durée</div><div class="aside-val">24 à 36 mois</div></div></div>
-      <div class="aside-card"><div class="aside-icon">🌍</div><div><div class="aside-label">Mobilité</div><div class="aside-val">Paris · Lyon · Marseille · Montpellier · Limoges</div></div></div>
-      <div class="aside-card"><div class="aside-icon">♟</div><div><div class="aside-label">Loisirs</div><div class="aside-val">Échecs · Natation · Football · Cuisine</div></div></div>
+      <a href="cv_Cyril.pdf" class="btn-dl" download>↓ Télécharger le CV</a>
     </div>
   </div>
 </section>
-
-<!-- ── CONTACT ── -->
-<section id="contact" style="border-top:1px solid var(--border)">
-  <div class="contact-wrap reveal">
-    <div>
-      <h2 class="contact-headline">TRAVAILLONS<br><strong>ENSEMBLE</strong></h2>
-      <p class="contact-sub">Recruteur, client ou collaborateur — je suis disponible pour discuter d'opportunités d'alternance DevOps/DevSecOps à partir de septembre 2026 ou de projets freelance.</p>
-      <a href="cv_Cyril.pdf" class="btn-primary" download>↓ Télécharger le CV</a>
-    </div>
-    <div class="contact-cards">
-      <a class="c-card" href="mailto:tuekamcyril@gmail.com"><div class="c-icon">@</div><div><div class="c-label">Email</div><div class="c-val">tuekamcyril@gmail.com</div></div></a>
-      <a class="c-card" href="tel:+33760254779"><div class="c-icon">☎</div><div><div class="c-label">Téléphone</div><div class="c-val">07 60 25 47 79</div></div></a>
-      <a class="c-card" href="https://linkedin.com/in/cyril-tuekam-8a5584205" target="_blank" rel="noopener"><div class="c-icon">in</div><div><div class="c-label">LinkedIn</div><div class="c-val">cyril-tuekam-8a5584205</div></div></a>
-      <a class="c-card" href="https://github.com/Cyrolymp" target="_blank" rel="noopener"><div class="c-icon">&lt;/&gt;</div><div><div class="c-label">GitHub</div><div class="c-val">github.com/Cyrolymp</div></div></a>
-    </div>
-  </div>
-</section>
-
-</main>
 
 <footer>
   <span>© 2026 Cyril Olympio Tuekam</span>
-  <span>Limoges · Disponible dès septembre 2026</span>
+  <span>Limoges · DevOps → DevSecOps · Disponible septembre 2026</span>
 </footer>
 
 <script>
-// Theme toggle
-const toggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-const saved = localStorage.getItem('theme') || 'dark';
-html.setAttribute('data-theme', saved);
-toggle.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+// Custom cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  if(cur) { cur.style.left = mx+'px'; cur.style.top = my+'px'; }
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  if(ring) { ring.style.left = rx+'px'; ring.style.top = ry+'px'; }
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => { if(ring) { ring.style.transform='translate(-50%,-50%) scale(1.6)'; ring.style.opacity='0.8'; } });
+  el.addEventListener('mouseleave', () => { if(ring) { ring.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='0.5'; } });
 });
 
 // Scroll reveal
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
-}, { threshold: 0.07 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal,.reveal-left').forEach(el => obs.observe(el));
 
 // HackHub carousel
 let hhIdx = 0;
 function hhUpdate() {
   const scr = document.getElementById('hh-scr');
-  if (!scr) return;
-  scr.querySelectorAll('img').forEach((img, i) => img.classList.toggle('active', i === hhIdx));
-  scr.querySelectorAll('.scr-dot').forEach((d, i) => d.classList.toggle('on', i === hhIdx));
+  if(!scr) return;
+  scr.querySelectorAll('img').forEach((img,i) => img.classList.toggle('active', i===hhIdx));
+  scr.querySelectorAll('.scr-dot').forEach((d,i) => d.classList.toggle('on', i===hhIdx));
 }
-function hhNav(dir, e) { e.stopPropagation(); hhIdx = (hhIdx + dir + 3) % 3; hhUpdate(); }
-function hhGo(i, e) { e.stopPropagation(); hhIdx = i; hhUpdate(); }
-setInterval(() => { hhIdx = (hhIdx + 1) % 3; hhUpdate(); }, 3500);
+function hhNav(dir,e){ e.stopPropagation(); hhIdx=(hhIdx+dir+3)%3; hhUpdate(); }
+function hhGo(i,e){ e.stopPropagation(); hhIdx=i; hhUpdate(); }
+setInterval(()=>{ hhIdx=(hhIdx+1)%3; hhUpdate(); }, 4000);
 </script>
 </body>
 </html>

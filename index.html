@@ -373,7 +373,7 @@ nav {
 
 /* Projects grid secondary */
 .proj-grid-secondary {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
   background: rgba(201,168,76,0.08);
   border: 1px solid rgba(201,168,76,0.08); border-top: none;
 }
@@ -409,8 +409,9 @@ nav {
   text-transform: uppercase; display: flex; align-items: center; gap: 6px;
   margin-top: auto; transition: gap .2s;
 }
-.proj-mini-link:hover { gap: 10px; }
-.proj-mini-link::after { content: '→'; }
+.proj-mini-badge { font-family:'Space Mono',monospace; font-size:9px; color:var(--or); background:var(--or-dim); border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:2px 8px; margin-top:4px; display:inline-block; }
+.proj-mini-wip { border-color: rgba(201,168,76,0.15); }
+.proj-mini-wip .proj-mini-type { color: var(--or); }
 
 /* ═══════════════════════════════════════
    SCENE 5 — PARCOURS (timeline verticale)
@@ -774,40 +775,73 @@ footer {
 
   <!-- Grid secondaire -->
   <div class="proj-grid-secondary reveal">
+
+    <!-- 02 Findme -->
     <div class="proj-mini">
       <div class="proj-mini-idx">02</div>
-      <div class="proj-mini-type">Infrastructure · Solo · En cours</div>
-      <div class="proj-mini-name">HomeCloud</div>
-      <p class="proj-mini-desc">Infrastructure cloud personnelle from scratch : Terraform, Kubernetes (K3s), GitHub Actions, Vault, Grafana/Prometheus. Standards de production.</p>
+      <div class="proj-mini-type">DevOps · Stage · 2 mois</div>
+      <div class="proj-mini-name">Findme</div>
+      <p class="proj-mini-desc">Startup africaine de géolocalisation et d'adressage postal numérique. Développement d'APIs sécurisées FastAPI/PostgreSQL, pipeline CI/CD, intégration front-end Figma/Tailwind CSS et automatisation WeasyPrint.</p>
       <div class="proj-mini-chips">
-        <span class="proj-mini-chip">Terraform</span><span class="proj-mini-chip">K3s</span><span class="proj-mini-chip">Vault</span><span class="proj-mini-chip">Grafana</span>
+        <span class="proj-mini-chip">FastAPI</span><span class="proj-mini-chip">PostgreSQL</span><span class="proj-mini-chip">CI/CD</span><span class="proj-mini-chip">Python</span><span class="proj-mini-chip">Django</span>
       </div>
-      <span class="proj-mini-link">GitHub</span>
+      <span class="proj-mini-badge">+20 % d'efficacité</span>
     </div>
+
+    <!-- 03 BeWeb -->
     <div class="proj-mini">
       <div class="proj-mini-idx">03</div>
-      <div class="proj-mini-type">DevSecOps · Solo · En cours</div>
+      <div class="proj-mini-type">Dev Web · Stage · 2 mois</div>
+      <div class="proj-mini-name">BeWeb SARL</div>
+      <p class="proj-mini-desc">Agence web camerounaise spécialisée en création de sites et marketing digital. Développement WordPress, optimisation SEO, administration Linux et automatisation Bash en méthodologie CI/CD.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">WordPress</span><span class="proj-mini-chip">SEO</span><span class="proj-mini-chip">Linux</span><span class="proj-mini-chip">Bash</span><span class="proj-mini-chip">CI/CD</span>
+      </div>
+      <span class="proj-mini-badge">-30 % temps publication</span>
+    </div>
+
+    <!-- 04 HomeCloud -->
+    <div class="proj-mini proj-mini-wip">
+      <div class="proj-mini-idx">04</div>
+      <div class="proj-mini-type">Infrastructure · Solo · 🔄 En cours</div>
+      <div class="proj-mini-name">HomeCloud</div>
+      <p class="proj-mini-desc">Infrastructure cloud personnelle from scratch aux standards de production : Terraform, Kubernetes (K3s), GitHub Actions, gestion des secrets avec Vault, monitoring Grafana/Prometheus.</p>
+      <div class="proj-mini-chips">
+        <span class="proj-mini-chip">Terraform</span><span class="proj-mini-chip">K3s</span><span class="proj-mini-chip">Vault</span><span class="proj-mini-chip">Grafana</span><span class="proj-mini-chip">Prometheus</span>
+      </div>
+      <span class="proj-mini-chip" style="color:var(--or);border-color:rgba(201,168,76,0.3);">GitHub à venir</span>
+    </div>
+
+    <!-- 05 Plateforme DevSecOps -->
+    <div class="proj-mini proj-mini-wip">
+      <div class="proj-mini-idx">05</div>
+      <div class="proj-mini-type">DevSecOps · Solo · 🔄 En cours</div>
       <div class="proj-mini-name">Plateforme de déploiement sécurisée</div>
-      <p class="proj-mini-desc">Infrastructure Terraform/Kubernetes, pipeline CI/CD sécurisé (GitHub Actions), scan Trivy, gestion des secrets et conformité DevSecOps.</p>
+      <p class="proj-mini-desc">Infrastructure Terraform/Kubernetes, pipeline CI/CD GitHub Actions sécurisé, scan de vulnérabilités Trivy, gestion des secrets et conformité DevSecOps.</p>
       <div class="proj-mini-chips">
         <span class="proj-mini-chip">Terraform</span><span class="proj-mini-chip">Kubernetes</span><span class="proj-mini-chip">Trivy</span><span class="proj-mini-chip">Docker</span>
       </div>
+      <span class="proj-mini-chip" style="color:var(--or);border-color:rgba(201,168,76,0.3);">GitHub à venir</span>
     </div>
+
+    <!-- 06 Password Analyzer -->
     <a class="proj-mini" href="https://github.com/Cyrolymp/Password_Analyzer" target="_blank">
-      <div class="proj-mini-idx">04</div>
+      <div class="proj-mini-idx">06</div>
       <div class="proj-mini-type">Outil · Sécurité · Java</div>
       <div class="proj-mini-name">Password Analyzer</div>
-      <p class="proj-mini-desc">Lecture masquée via Console.readPassword(), effacement immédiat du char[] en mémoire. Réflexe DevSecOps dès la conception.</p>
+      <p class="proj-mini-desc">CLI Java : lecture masquée via readPassword(), effacement du char[] en mémoire.</p>
       <div class="proj-mini-chips">
         <span class="proj-mini-chip">Java</span><span class="proj-mini-chip">Sécurité</span><span class="proj-mini-chip">CLI</span>
       </div>
       <span class="proj-mini-link">GitHub</span>
     </a>
+
+    <!-- 07 Analyseur réseau -->
     <div class="proj-mini">
-      <div class="proj-mini-idx">05</div>
+      <div class="proj-mini-idx">07</div>
       <div class="proj-mini-type">Réseau · Analyse</div>
       <div class="proj-mini-name">Analyseur réseau & protocoles</div>
-      <p class="proj-mini-desc">Analyse TCP, DNS, ARP, UDP via Wireshark et Cisco Packet Tracer. Cartographie des flux et renforcement de la sécurité réseau.</p>
+      <p class="proj-mini-desc">Analyse TCP, DNS, ARP, UDP via Wireshark et Packet Tracer. Cartographie des flux réseau.</p>
       <div class="proj-mini-chips">
         <span class="proj-mini-chip">Wireshark</span><span class="proj-mini-chip">TCP/IP</span><span class="proj-mini-chip">DNS</span>
       </div>
